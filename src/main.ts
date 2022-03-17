@@ -1,21 +1,16 @@
-// Import the express in typescript file
 import express from 'express';
+
 import logger from './config/logger';
 import config from './config/main';
-import EndpointRoot from './endpoints/root';
+
+import v1 from './routes/v1';
  
-// Initialize the express engine
-const app: express.Application = express();
+
+const server: express.Express = express();
  
-// Take a port 3000 for running server.
-const port: number = config.SERVER_PORT;
+// Use version 1 router
+server.use('/v1', v1);
  
-// Handling '/' Request
-app.all('/', (_req, _res) => {
-    new EndpointRoot(_req, _res).method();
-});
- 
-// Server setup
-app.listen(port, () => {
-    logger.info(`TypeScript with Express http://localhost:${port}/`);
+server.listen(config.SERVER_PORT, () => {
+    logger.info(`TypeScript with Express http://localhost:${config.SERVER_PORT}/`);
 });
