@@ -20,5 +20,15 @@ COPY --from=ts-remover /usr/app ./
 COPY ./src/config/config.ini /usr/app/config/config.ini
 # Copy all cron job scripts
 COPY ./cron /etc/periodic
+# Install python/pip (requirement of youtube-dl)
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
+# Install youtube-dl
+RUN wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+RUN chmod a+rx /usr/local/bin/youtube-dl
+# Install ffmpeg
+RUN apk add  --no-cache ffmpeg
 EXPOSE 3000
 CMD ["main.js"]
