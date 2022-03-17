@@ -2,18 +2,19 @@ import { Request, Response } from "express";
 import config from "../config/main";
 import Endpoint from "../interfaces/endpoint";
 
-/**
- * The root `/` endpoint of the RESTful API.
- * Will respond with some server metadata to the client.
- * The `/` endpoint should be accessable without any authentication.
- * The endpoint supports the following request methods:
- * - `GET`: Will deliver basic server metadata to the client
- */
 class EndpointRoot extends Endpoint {
     /**
-     * Creates a new EndpointRoot instance.
+     * The root `/` endpoint of the RESTful API.
+     * Will respond with some server metadata to the client.
+     * The `/` endpoint should be accessable without any authentication.
+     * The endpoint supports the following request methods:
+     * - `GET`: Will deliver basic server metadata to the client
+     * 
+     * All other supported methods will respond with http status code
+     * `405 - Method Not Allowed`.
+     * 
      * @param request express.js `Request` object
-     * @param response express.js `Response` object
+     * @param response exporess.js `Response` object
      */
     constructor(request: Request, response: Response) {
         super(request, response);
