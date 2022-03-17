@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "../config/logger";
 import { between } from "../utils/number";
 
 abstract class Endpoint {
@@ -99,21 +100,23 @@ abstract class Endpoint {
      * @protected
      */
     protected logStatus(status: number): void {
-        console.log(`Endpoint ${this.request.path} returns status ${status} for method ${this.request.method}`);
+        const msg: string = `Endpoint ${this.request.path} returns status ${status} for method ${this.request.method}`;
         switch(true) {
             case between(status, 200, 299):
-                // TODO implement info log
+                logger.info(msg);
                 break;
             case between(status, 400, 499):
-                // TODO implement warn log
+                logger.warn(msg);
                 this.response.sendStatus(status);
                 break;
             case between(status, 500,599):
-                // TODO implement error log
+                logger.error(msg);
                 this.response.sendStatus(status);
                 break;
             default:
-                throw Error(`HTTP status code ${status} not implemented`);
+                const err: string = `HTTP status code ${status} not implemented`;
+                logger.error(err);
+                throw Error(err);
         }
     }
 }
