@@ -5,7 +5,7 @@ import Configuration from "../interfaces/config";
 
 require('dotenv').config();
 
-const configFile = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
+const configFile = ini.parse(fs.readFileSync(`${__dirname}/config.ini`, 'utf-8'));
 
 /**
  * The main server configuration of the RESTful API.

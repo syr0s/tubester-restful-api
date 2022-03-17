@@ -2,7 +2,6 @@ import log4js from 'log4js';
 import config from './main';
 
 const appenders:string[] = ['console'];
-console.log(config.LOG_TO_FILE)
 if (config.LOG_TO_FILE) {
     appenders.push('file');
 } 
@@ -10,7 +9,10 @@ log4js.configure({
     appenders: { 
         file: { 
             type: 'file',
-            filename: `${config.LOG_PATH}/${config.LOG_FILE}`
+            filename: `${config.LOG_PATH}/${config.LOG_FILE}`,
+            maxLogSize: 10485760, 
+            backups: 3, 
+            compress: true,
         }, 
         console: {
             type: 'stdout',
