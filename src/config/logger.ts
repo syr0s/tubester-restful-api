@@ -9,12 +9,11 @@ if (config.LOG_TO_FILE) {
 log4js.configure({
     appenders: { 
         file: { 
-            type: "file",
-            // TODO this value should come from `config.ini`
-            filename: "logs/api.log"
+            type: 'file',
+            filename: `${config.LOG_PATH}/${config.LOG_FILE}`
         }, 
         console: {
-            type: "stdout",
+            type: 'stdout',
         }
     },
     categories: { 

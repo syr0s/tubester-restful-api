@@ -45,6 +45,37 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     DEBUG: boolean;
+    /**
+     * Activates / Deactives the log to file functionality of the server. Instead
+     * of logging to the console and a dedicated log file, the server will only
+     * log to the console, if set to `false`.
+     * 
+     * Default `true`
+     * 
+     * The value is set using the `.env` file.
+     */
+    LOG_TO_FILE: boolean;
+    /**
+     * Sets up the log level of the events.
+     * - `info`: Will log a lot of informational stuff during the runtime.
+     * - `warn`: Will log warnings, errors and fatal errors only. This will reduce
+     * dramatically the messages in your log files.
+     * - `error`: Only log errors and fatal errors.
+     * - `fatal`: Only log fatal errors (not recommended).
+     * 
+     * Default: `info`
+     * 
+     * The value is set using the `.env` file.
+     */
+    LOG_LEVEL: string;
+    /**
+     * The path to store the log files.
+     */
+    LOG_PATH: string;
+    /**
+     * Name of the log file.
+     */
+    LOG_FILE: string;
 }
 
 export default Configuration;
