@@ -16,7 +16,8 @@ abstract class Endpoint {
     }
 
     /**
-     * Will call the requested method of the endpoint. The RESTful API accepts, the
+     * Will call the requested method of the endpoint. This is the main method
+     * to call any endpoint of the RESTful API. The RESTful API accepts, the
      * following request methods:
      * - `GET`: typically used to get some data from the server.
      * - `POST`: typically used to update data on the server.
@@ -53,7 +54,7 @@ abstract class Endpoint {
      * @protected
      */
     protected get(): void {
-        this.logStatus(405);
+        this.status(405);
     }
 
     /**
@@ -64,7 +65,7 @@ abstract class Endpoint {
      * @protected
      */
     protected post(): void {
-        this.logStatus(405);
+        this.status(405);
     }
 
     /**
@@ -75,7 +76,7 @@ abstract class Endpoint {
      * @protected
      */
     protected put(): void {
-        this.logStatus(405);
+        this.status(405);
     }
 
     /**
@@ -86,21 +87,24 @@ abstract class Endpoint {
      * @protected
      */
     protected del(): void {
-        this.logStatus(405);
+        this.status(405);
     }
     
     /**
      * Will log the status of the request. Will respond to the client, if the
      * http status code is related to a `Client error responses (400–499)`
      * or a `Server error responses (500–599)`. On `Successful responses (200–299)`
-     * status codes, the method will only log the event.
+     * status codes, the method will only log the event. The method will set the
+     * status code of the `response` object to the provided status `number` in any
+     * cases.
      * 
      * @param status http status code of the operation
      * @throws error on not implemented status codes
      * @protected
      */
-    protected logStatus(status: number): void {
+    protected status(status: number): void {
         const msg: string = `Endpoint ${this.request.path} returns status ${status} for method ${this.request.method}`;
+        this.response.statusCode = status;
         switch(true) {
             case between(status, 200, 299):
                 logger.info(msg);
@@ -119,4 +123,15 @@ abstract class Endpoint {
                 throw Error(err);
         }
     }
+
+    /**
+     * Set the response header to `content-type: application/json`.
+     */
+    protected setHeaderJson(): void {
+        this.response.set({
+            'Content-Type': 'application/json',
+        });
+    }
 }
+
+export default Endpoint;
