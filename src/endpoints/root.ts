@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import config from "../config/main";
 import Endpoint from "../interfaces/endpoint";
 
 /**
@@ -35,9 +36,9 @@ class EndpointRoot extends Endpoint {
      */
     protected override get(): void {
         const response: object = {
-            name: 'tubester',
-            version: '1.0.0',
-            debug: true
+            name: config.SERVER_NAME,
+            version: config.SERVER_VERSION,
+            debug: config.DEBUG,
         };
         this.setHeaderJson();
         this.status(200);
