@@ -25,7 +25,7 @@ const config: Configuration = {
     LOG_LEVEL: process.env.LOG_LEVEL || 'info',
     LOG_PATH: configFile.logging.path || 'logs',
     LOG_FILE: configFile.logging.file || 'api_def.log',
-    JWT_SECRET_KEY: process.env.JWT_SECRE_TKEY || '',
+    JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || '',
     JWT_TOKEN_HEADER_KEY: process.env.JWT_TOKEN_HEADER_KEY || '',
 }
 
