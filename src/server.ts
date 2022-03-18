@@ -4,7 +4,7 @@ import cors from 'cors';
 import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
-import { V1 } from './routes/root';
+import { V1 } from './routes/v1';
 import Routes from './interfaces/routes';
 
 class Server {

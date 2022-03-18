@@ -10,7 +10,7 @@ abstract class Controller {
      * @param needle search parameter as string
      + * @returns array containing result objects
      */
-    public abstract readOne(needle: string): Promise<object[]>;
+    public abstract readOne(needle: string): Promise<any>;
 
     /**
      * Read all records from the MongoDB

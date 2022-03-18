@@ -7,15 +7,15 @@ export class UserController extends Controller {
      * @param username to query the database
      * @returns array containing the data or an empty if no data is available
      */
-    public async readOne(username: string): Promise<object[]> {
-        const user = await User.find({
+    public async readOne(username: string): Promise<any> {
+        const user = await User.findOne({
             username: username
-        });
+        }).lean().exec();
         return user;
     }
 
     /** 
-     * Not implemented 
+     * Not implemented
      * @throws
      * */
     public readAll(): Promise<object[]> {

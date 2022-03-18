@@ -132,6 +132,28 @@ abstract class Endpoint {
             'Content-Type': 'application/json',
         });
     }
+
+    /**
+     * Validates that the a given object contains a certain key
+     * @param obj to validate
+     * @param val search for
+     * @returns boolean
+     */
+    protected hasKey<T>(obj: T, val: any): val is T[keyof T]  {
+        for (let k in obj) {
+            if (k == val) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected empty(obj: string | any): boolean {
+        if (obj.length === 0) {
+            return true;
+        }
+        return false;
+    }
 }
 
 export default Endpoint;
