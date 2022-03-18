@@ -32,11 +32,11 @@ const config: Configuration = {
 }
 
 // Throw an error if `JWT_SECRET_KEY` is not set
-if (config.JWT_SECRET_KEY.length == 0) {
+if (!config.JWT_SECRET_KEY || config.JWT_SECRET_KEY.length == 0) {
     throw new Error('JWT_SECRET_KEY is empty please set up a value using environment variable');
 }
 // Throw an error if `JWT_TOKEN_HEADER_KEY` is not set
-if (config.JWT_TOKEN_HEADER_KEY.length == 0) {
+if (!config.JWT_TOKEN_HEADER_KEY || config.JWT_TOKEN_HEADER_KEY.length == 0) {
     throw new Error('JWT_TOKEN_HEADER_KEY is empty please set up a value using environment variable');
 }
 
