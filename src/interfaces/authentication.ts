@@ -36,7 +36,6 @@ abstract class Authentication extends Endpoint {
                 this.status(403);
                 return;
             }  
-            console.log(result._id.toString())
             this.uuid = result._id.toString();
             this.createJWT(result._id.toString());
          });
@@ -51,7 +50,6 @@ abstract class Authentication extends Endpoint {
             time: Date.now(),
             uuid: userId,
         }
-        console.log(data)
         try {
             const token = jwt.sign(data, this.jwtSecretKey);
             this.status(200);

@@ -1,6 +1,5 @@
 import { Request, Response, Router } from "express";
-import { request } from "http";
-import EndpointLogin from "../endpoints/login";
+import EndpointAuth from "../endpoints/auth";
 import EndpointRoot from "../endpoints/root";
 import Routes from "../interfaces/routes";
 
@@ -24,8 +23,8 @@ export class V1 extends Routes {
         this.router.all('/', (request: Request, response: Response) => {
             new EndpointRoot(request, response).method();
         });
-        this.router.all('/login', (request: Request, response: Response) => {
-            new EndpointLogin(request, response).method();
+        this.router.all('/auth', (request: Request, response: Response) => {
+            new EndpointAuth(request, response).method();
         });
     }
 }

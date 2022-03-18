@@ -4,9 +4,9 @@ import Endpoint from "../interfaces/endpoint";
 
 class EndpointRoot extends Endpoint {
     /**
-     * The root `/` endpoint of the RESTful API.
+     * The root `/v1/` endpoint of the RESTful API.
      * Will respond with some server metadata to the client.
-     * The `/` endpoint should be accessable without any authentication.
+     * The `/v1/` endpoint should be accessable without any authentication.
      * The endpoint supports the following request methods:
      * - `GET`: Will deliver basic server metadata to the client
      * 
