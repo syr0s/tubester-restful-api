@@ -43,11 +43,13 @@ abstract class Database {
 
     /** 
      * Read records from the database.
+     * @param table the table/document/collection to query
+     * @param needle object containing the query parameters
      * @public
      * @abstract
      * @returns Array of objects containing the query result
      */
-    public abstract read(): object[];
+    public abstract read(table: string, needle: object): object[];
     
     /** 
      * Write record(s) to the database.
@@ -56,6 +58,14 @@ abstract class Database {
      * @returns status code as `number`
      */
     public abstract write(): number;
+
+    /**
+     * Updates a record in the database.
+     * @public
+     * @abstract
+     * @ returns status code as `number`
+     */
+    public abstract update(): number;
     
     /** 
      * Delete a record from the database.

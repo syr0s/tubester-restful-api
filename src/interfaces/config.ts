@@ -106,6 +106,47 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     JWT_TOKEN_HEADER_KEY: string;
+    /**
+     * Hostname or IP address the MongoDB server is reachable.
+     * 
+     * Default: tubester-mongodb
+     * 
+     * The value is set using the `.env` file.
+     */
+    MONGODB_HOST: string;
+    /**
+     * The port the MongoDB server is listen on.
+     * 
+     * Default: 27017
+     * 
+     * The value is set using the `.env` file.
+     */
+    MONGODB_PORT: number;
+    /**
+     * Database name inside the MongoDB instance.
+     * 
+     * Default: tubester
+     * 
+     * The value is set using the `.env` file.
+     */
+    MONGODB_DATABASE: string;
+    /**
+     * User which has read and write access on the database.
+     * 
+     * Default: tubester
+     * 
+     * The value is set using the `.env` file.
+     */
+    MONGODB_USER: string;
+    /**
+     * Password of the database user.
+     * 
+     * Default: exampleP4ssword
+     * 
+     * The value is set using the `.env` file.
+     */
+    MONGODB_PASSWORD: string;
+
 }
 
 export default Configuration;

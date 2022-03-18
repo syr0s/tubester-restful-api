@@ -29,6 +29,11 @@ const config: Configuration = {
     LOG_FILE: configFile.logging.file || 'api_def.log',
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || '',
     JWT_TOKEN_HEADER_KEY: process.env.JWT_TOKEN_HEADER_KEY || '',
+    MONGODB_HOST: process.env.MONGODB_HOST || 'tubester-mongodb',
+    MONGODB_PORT: Number(process.env.MONGODB_PORT) || 27017,
+    MONGODB_DATABASE: process.env.MONNGODB_DATABASE || 'tubester',
+    MONGODB_USER: process.env.MONGODB_USER || 'tubester',
+    MONGODB_PASSWORD: process.env.MONGODB_PASSWORD || 'exampleP4ssword',
 }
 
 // Throw an error if `JWT_SECRET_KEY` is not set
