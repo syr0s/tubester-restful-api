@@ -38,7 +38,6 @@ export class UserController extends Controller {
     public async create(data: object): Promise<void> {
         const newUser: UserInterface = new User(data);
         await newUser.save();
-        console.log(newUser);
     }
 
     // TODO implement method

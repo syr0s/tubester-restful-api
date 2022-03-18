@@ -20,7 +20,34 @@ class EndpointUser extends Authentication {
         }
     }
     // TODO implement POST to update the user
-    // TODO implement PUT to create a new user
+    
+    /**
+     * Create a new user on the database.
+     * Requires a `username` and `passwordHash` inside the body
+     * request, will otherwise return `400 - Bad Request`. Will
+     * provide a lookup in the database, if the given username
+     * exists, if the username was found the API returns `400 -
+     * Bad Request`. After the user was created the API will
+     * return `201 - Created` to the client.
+     */
+    protected put(): void {
+        if (this.validateJWT()) {
+            this.validatePayload();
+            this.userController.readOne(this.request.body.username).then((result) => {
+                if (!result) {
+                    const data: object = {
+                        username: this.request.body.username,
+                        passwordHash: this.request.body.passwordHash,
+                    };
+                    this.userController.create(data);
+                    this.status(201);
+                    this.response.end();
+                } else {
+                    this.status(400);
+                }
+            });
+        }
+    }
     // TODO implement DELETE to delete a user
 }
 

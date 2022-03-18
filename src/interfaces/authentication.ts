@@ -37,10 +37,7 @@ abstract class Authentication extends Endpoint {
      * a json web token.
      */
     protected login(): void {
-        if (!this.hasKey(this.request.body, 'username')) this.status(400);
-        if (!this.hasKey(this.request.body, 'passwordHash')) this.status(400);
-        if(this.empty(this.request.body.username)) this.status(400);
-        if(this.empty(this.request.body.passwordHash)) this.status(400);
+        this.validatePayload();
         this.userController.readOne(this.request.body.username).then((result) => {
             if (this.empty(result)) this.status(401);
             if (this.request.body.passwordHash != result.passwordHash) {
@@ -88,6 +85,30 @@ abstract class Authentication extends Endpoint {
             }
         }
         this.status(401);
+        return;
+    }
+
+    /**
+     * Validate that the given payload contains the keys `username` and
+     * `passwordHash` and that the keys contains values.
+     */
+    protected validatePayload(): void {
+        if (!this.hasKey(this.request.body, 'username')) {
+            this.status(400);
+            return;
+        }
+        if (!this.hasKey(this.request.body, 'passwordHash')) {
+            this.status(400);
+            return;
+        }
+        if(this.empty(this.request.body.username)) {
+            this.status(400);
+            return;
+        }
+        if(this.empty(this.request.body.passwordHash)) {
+            this.status(400);
+            return;
+        }
         return;
     }
 }
