@@ -1,20 +1,4 @@
-import express from 'express';
-
-import logger from './config/logger';
-import config from './config/main';
-import MongoDB from './database/mongodb';
-
-import v1 from './routes/v1';
+import Server from './server';
  
-
-const server: express.Express = express();
- 
-// Use version 1 router
-server.use('/v1', v1);
-
-const mongodb = new MongoDB();
-mongodb.connect();
- 
-server.listen(config.SERVER_PORT, () => {
-    logger.info(`TypeScript with Express http://localhost:${config.SERVER_PORT}/`);
-});
+const server: Server = new Server();
+server.start();
