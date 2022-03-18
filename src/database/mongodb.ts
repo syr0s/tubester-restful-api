@@ -9,8 +9,6 @@ class MongoDB {
     private uri: string;
     /** Default MongoDB connection options */
     private connectionOptions: object = {
-        //autoReconnect: true,
-        //reconnectTries: 5,
         keepAlive: true,
         socketTimeoutMS: 3000,
         connectTimeoutMS: 3000,

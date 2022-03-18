@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
+import { UserController } from '../controller/user';
 import config from "../config/main";
 import Endpoint from "./endpoint";
+import Controller from "./controller";
 
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
     private jwtTokenHeaderKey: string;
+    private userController: Controller = new UserController();
 
     constructor(request: Request, response: Response) {
         super(request, response);

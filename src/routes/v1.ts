@@ -10,6 +10,7 @@ import EndpointRoot from '../endpoints/root';
  */
 const v1 = express.Router();
 
+
 /** Root endpoint of the RESTful API. */
 v1.all('/', (request: Request, response: Response) => {
     new EndpointRoot(request, response).method();
