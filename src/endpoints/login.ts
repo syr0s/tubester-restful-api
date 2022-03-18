@@ -16,10 +16,12 @@ class EndpointLogin extends Authentication {
 
     /** Demo only */
     protected post(): void {
-        this.validateJWT();
-        this.response.send({
-            hello: 'world'
-        });
+        if (this.validateJWT()) {
+            this.response.send({
+                uuid: this.uuid
+            });
+        }
+        
     }
 }
 

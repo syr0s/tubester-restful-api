@@ -5,10 +5,15 @@ import config from "../config/main";
 import Endpoint from "./endpoint";
 import Controller from "./controller";
 import logger from "../config/logger";
+import Jwt from "./jwt";
 
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
     private userController: Controller = new UserController();
+    /** The unique user id */
+    protected uuid?: string;
+    /** JWT token expires after 10 days */
+    private expiry: number = 86400000 * 10;
 
     constructor(request: Request, response: Response) {
         super(request, response);
@@ -31,7 +36,9 @@ abstract class Authentication extends Endpoint {
                 this.status(403);
                 return;
             }  
-            this.createJWT(result._uid);
+            console.log(result._id.toString())
+            this.uuid = result._id.toString();
+            this.createJWT(result._id.toString());
          });
     }
 
@@ -40,11 +47,11 @@ abstract class Authentication extends Endpoint {
      * @param userId the user id (_id in MongoDB)
      */
     protected createJWT(userId: string): void {
-        // TODO jwt should have a expiry
-        let data = {
-            time: Date(),
-            userId: userId,
+        let data:Jwt = {
+            time: Date.now(),
+            uuid: userId,
         }
+        console.log(data)
         try {
             const token = jwt.sign(data, this.jwtSecretKey);
             this.status(200);
@@ -63,12 +70,16 @@ abstract class Authentication extends Endpoint {
         const authHeader = this.request.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(' ')[1];
-            const verify = jwt.verify(token, this.jwtSecretKey);
+            const verify:any = jwt.verify(token, this.jwtSecretKey);
             if (verify) {
+                if (verify.time + this.expiry > Date.now()) {
+                    this.uuid = verify.uuid;
                 return true;
+                }
             }
         }
         this.status(401);
+        return;
     }
 }
 
