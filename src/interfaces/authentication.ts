@@ -7,6 +7,17 @@ import Controller from "./controller";
 import logger from "../config/logger";
 import Jwt from "./jwt";
 
+/**
+ * While using the `Authentication` abstract class, you may want to wrap
+ * your request methods inside an if-statement like:
+ * ```typescript
+ * if (this.validateJWT()) {
+ *  // do fancy stuff
+ * }
+ * ```
+ * Using this aproach, your endpoint is protected by requiring a valid
+ * `json web token` from the client.
+ */
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
     protected userController: Controller = new UserController();
