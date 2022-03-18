@@ -8,13 +8,11 @@ import logger from "../config/logger";
 
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
-    private jwtTokenHeaderKey: string;
     private userController: Controller = new UserController();
 
     constructor(request: Request, response: Response) {
         super(request, response);
         this.jwtSecretKey = config.JWT_SECRET_KEY;
-        this.jwtTokenHeaderKey = config.JWT_TOKEN_HEADER_KEY;
     }
 
     /**
@@ -42,6 +40,7 @@ abstract class Authentication extends Endpoint {
      * @param userId the user id (_id in MongoDB)
      */
     protected createJWT(userId: string): void {
+        // TODO jwt should have a expiry
         let data = {
             time: Date(),
             userId: userId,
@@ -55,7 +54,22 @@ abstract class Authentication extends Endpoint {
             this.status(404);
         }
     }
-    protected validateJWT(): void {}
+
+    /**
+     * Validates a passed in json web token
+     * @returns `true` or send http status `401` to the client
+     */
+    protected validateJWT(): boolean | void {
+        const authHeader = this.request.headers.authorization;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            const verify = jwt.verify(token, this.jwtSecretKey);
+            if (verify) {
+                return true;
+            }
+        }
+        this.status(401);
+    }
 }
 
 export default Authentication;

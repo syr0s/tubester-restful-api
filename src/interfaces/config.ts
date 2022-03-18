@@ -97,16 +97,6 @@ interface Configuration {
      */
     JWT_SECRET_KEY: string;
     /**
-     * Token to validate the json web token delivered through the request.
-     * Please make sure that this variable contains a value, otherwise the
-     * server will throw an error.
-     * 
-     * Default: not set
-     * 
-     * The value is set using the `.env` file.
-     */
-    JWT_TOKEN_HEADER_KEY: string;
-    /**
      * Hostname or IP address the MongoDB server is reachable.
      * 
      * Default: tubester-mongodb

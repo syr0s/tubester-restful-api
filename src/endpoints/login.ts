@@ -6,8 +6,20 @@ class EndpointLogin extends Authentication {
         super(request, response);
     }
 
+    /**
+     * Login to the RESTful API. Will return a 
+     * json web token on valid credentials.
+     */
     protected override get(): void {
         this.login();
+    }
+
+    /** Demo only */
+    protected post(): void {
+        this.validateJWT();
+        this.response.send({
+            hello: 'world'
+        });
     }
 }
 
