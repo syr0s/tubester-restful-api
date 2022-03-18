@@ -2,14 +2,16 @@ import express from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import config from './config/main';
-import v1 from './routes/v1';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
+import { RootRoutes } from './routes/root';
+import Routes from './interfaces/routes';
+import Database from './interfaces/database';
 
 class Server {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
-
+ 
     /**
      * Creates a new server instance.
      */
@@ -34,7 +36,7 @@ class Server {
      * Setup routing on the server.
      */
     private routes(): void {
-        this.app.use('/v1', v1);
+        this.app.use('/', new RootRoutes().router);
     }
 
     /**
