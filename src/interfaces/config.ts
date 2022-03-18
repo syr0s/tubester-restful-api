@@ -69,13 +69,43 @@ interface Configuration {
      */
     LOG_LEVEL: string;
     /**
-     * The path to store the log files.
+     * The path to store the log files. Please make sure that the node
+     * user inside the container has read/write access to this path.
+     * 
+     * Default: logs
+     * 
+     * The value is set using the `config.ini` file.
      */
     LOG_PATH: string;
     /**
-     * Name of the log file.
+     * Name of the log file. Please make sure that the node user inside
+     * the container has read/write access to this file.
+     * 
+     * Default: api.log
+     * 
+     * The value is set using the `config.ini` file.
      */
     LOG_FILE: string;
+    /**
+     * Secret key to encrypt / sign the json web token. Please make sure
+     * that this variable contains a value, otherwise the server will 
+     * throw an error.
+     * 
+     * Default: not set
+     * 
+     * The value is set using the `.env` file.
+     */
+    JWT_SECRET_KEY: string;
+    /**
+     * Token to validate the json web token delivered through the request.
+     * Please make sure that this variable contains a value, otherwise the
+     * server will throw an error.
+     * 
+     * Default: not set
+     * 
+     * The value is set using the `.env` file.
+     */
+    JWT_TOKEN_HEADER_KEY: string;
 }
 
 export default Configuration;

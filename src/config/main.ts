@@ -25,6 +25,15 @@ const config: Configuration = {
     LOG_LEVEL: process.env.LOG_LEVEL || 'info',
     LOG_PATH: configFile.logging.path || 'logs',
     LOG_FILE: configFile.logging.file || 'api_def.log',
+    JWT_SECRET_KEY: process.env.JWT_SECRE_TKEY || '',
+    JWT_TOKEN_HEADER_KEY: process.env.JWT_TOKEN_HEADER_KEY || '',
+}
+
+if (config.JWT_SECRET_KEY.length == 0) {
+    throw new Error('JWT_SECRET_KEY is empty please set up a value using environment variable');
+}
+if (config.JWT_TOKEN_HEADER_KEY.length == 0) {
+    throw new Error('JWT_TOKEN_HEADER_KEY is empty please set up a value using environment variable');
 }
 
 export default config;
