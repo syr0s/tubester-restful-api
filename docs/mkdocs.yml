@@ -1,0 +1,7 @@
+site_name: Tubester RESTful API
+nav:
+    - Home: index.md
+    - Endpoints:
+      - '/': 'endpoints/root.md'
+      - '/auth': 'endpoints/auth.md'
+theme: readthedocs
