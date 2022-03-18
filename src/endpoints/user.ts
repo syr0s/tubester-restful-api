@@ -19,7 +19,29 @@ class EndpointUser extends Authentication {
             })
         }
     }
-    // TODO implement POST to update the user
+    /**
+     * `POST` method for the endpoint `/v1/user`. Updates the current user to the
+     * new data received within the `request.body`.
+     */
+    protected post(): void {
+        if (this.validateJWT()) {
+            this.validatePayload();
+            // Check if the requested new username is already in the database
+            this.userController.readOne(this.request.body.username).then((result) => {
+                if (!result) {
+                    const data = {
+                        username: this.request.body.username,
+                        passwordHash: this.request.body.passwordHash,
+                    }
+                    this.userController.update(String(this.uuid), data)
+                    this.status(201);
+                    this.response.end();
+                } else {
+                    this.status(400);
+                }
+            });
+        }
+    }
     
     /**
      * Create a new user on the database.

@@ -40,9 +40,13 @@ export class UserController extends Controller {
         await newUser.save();
     }
 
-    // TODO implement method
-    public update(key: string, data: object): Promise<void> {
-        throw new Error('update method not implemented for Users');
+    /**
+     * Update a record in MongoDB
+     * @param key the `_id`
+     * @param data to update
+     */
+    public async update(key: string, data: object): Promise<void> {
+        await User.findByIdAndUpdate(key, data).exec();
     }
 
     // TODO implement method
