@@ -4,4 +4,5 @@ nav:
     - Endpoints:
       - '/': 'endpoints/root.md'
       - '/auth': 'endpoints/auth.md'
+      - '/user': 'endpoints/user.md'
 theme: readthedocs

@@ -1,1 +1,1 @@
-# Endoint `/v1/auth`
+# Endpoint `/v1/auth`
