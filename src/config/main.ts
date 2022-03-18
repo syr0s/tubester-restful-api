@@ -3,8 +3,10 @@ import fs from 'fs';
 import ini from 'ini';
 import Configuration from "../interfaces/config";
 
+// Load and process `.env` file.
 require('dotenv').config();
 
+// Read `config.ini` file.
 const configFile = ini.parse(fs.readFileSync(`${__dirname}/config.ini`, 'utf-8'));
 
 /**
@@ -29,9 +31,11 @@ const config: Configuration = {
     JWT_TOKEN_HEADER_KEY: process.env.JWT_TOKEN_HEADER_KEY || '',
 }
 
+// Throw an error if `JWT_SECRET_KEY` is not set
 if (config.JWT_SECRET_KEY.length == 0) {
     throw new Error('JWT_SECRET_KEY is empty please set up a value using environment variable');
 }
+// Throw an error if `JWT_TOKEN_HEADER_KEY` is not set
 if (config.JWT_TOKEN_HEADER_KEY.length == 0) {
     throw new Error('JWT_TOKEN_HEADER_KEY is empty please set up a value using environment variable');
 }
