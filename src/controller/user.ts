@@ -5,12 +5,13 @@ export class UserController extends Controller {
     /**
      * Collects all userdata from a particular username
      * @param username to query the database
+     * @param projection filter to needed fields, you can activate certain fields using
      * @returns array containing the data or an empty if no data is available
      */
-    public async readOne(username: string): Promise<any> {
+    public async readOne(username: string, projection?: object): Promise<any> {
         const user = await User.findOne({
             username: username
-        }).lean().exec();
+        },projection).lean().exec();
         return user;
     }
 
@@ -20,6 +21,17 @@ export class UserController extends Controller {
      * */
     public readAll(): Promise<object[]> {
         throw new Error('readAll method not implemented for Users');
+    }
+
+    /**
+     * Query the records using the `_id`.
+     * @param id to query
+     * @param projection filter to needed fields, you can activate certain fields using
+     * @returns array containing the data or an empty if no data is available
+     */
+    public async readById(id: string, projection?: object): Promise<any> {
+        const user = await User.findById(id, projection).exec();
+        return user;
     }
 
     // TODO the parameter could be an object

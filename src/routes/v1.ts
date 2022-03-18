@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import EndpointAuth from "../endpoints/auth";
 import EndpointRoot from "../endpoints/root";
+import EndpointUser from "../endpoints/user";
 import Routes from "../interfaces/routes";
 
 export class V1 extends Routes {
@@ -25,6 +26,9 @@ export class V1 extends Routes {
         });
         this.router.all('/auth', (request: Request, response: Response) => {
             new EndpointAuth(request, response).method();
+        });
+        this.router.all('/user', (request: Request, response: Response) => {
+            new EndpointUser(request, response).method();
         });
     }
 }

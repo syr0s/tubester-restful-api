@@ -8,15 +8,23 @@ abstract class Controller {
     /**
      * Read a defined record from the MongoDB
      * @param needle search parameter as string
-     + * @returns array containing result objects
+     * @param projection filter to needed fields, you can activate certain fields using
+     * key value pair: fieldname: 1 or deactivate them using fieldname: 0
+     * @returns array containing result objects
      */
-    public abstract readOne(needle: string): Promise<any>;
+    public abstract readOne(needle: string, projection?: object): Promise<any>;
 
     /**
      * Read all records from the MongoDB
      * @returns array containing result objects
      */
     public abstract readAll(): Promise<object[]>;
+
+    /**
+     * Query for a specific record id.
+     * @param id of the record
+     */
+    public abstract readById(id: string, projection?: object): Promise<any>;
 
     /**
      * Update a record in MongoDB

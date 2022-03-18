@@ -9,7 +9,7 @@ import Jwt from "./jwt";
 
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
-    private userController: Controller = new UserController();
+    protected userController: Controller = new UserController();
     /** The unique user id */
     protected uuid?: string;
     /** JWT token expires after 10 days */

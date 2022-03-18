@@ -4,11 +4,9 @@ import Authentication from "../interfaces/authentication";
 class EndpointAuth extends Authentication {
     /**
      * Authentication endpoint of the RESTful API which is reachable
-     * at `/v1/auth`. The endpoint provides four different methods:
+     * at `/v1/auth`. The endpoint provides two different methods:
      * - `GET`: Logs in a user on valid credentials
      * - `POST`: Renews the signed `json web token`
-     * - `PUT`: Creates a new user account
-     * - `DELETE`: Deletes a user account
      * @param request express.js `Request` object 
      * @param response exporess.js `Response` object
      */
@@ -50,9 +48,6 @@ class EndpointAuth extends Authentication {
             if(this.uuid) this.createJWT(this.uuid);
         }
     }
-
-    // TODO implement PUT endpoint
-    // TODO implement DELETE endpoint
 }
 
 export default EndpointAuth;
