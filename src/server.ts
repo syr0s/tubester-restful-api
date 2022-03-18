@@ -4,9 +4,8 @@ import cors from 'cors';
 import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
-import { RootRoutes } from './routes/root';
+import { V1 } from './routes/root';
 import Routes from './interfaces/routes';
-import Database from './interfaces/database';
 
 class Server {
     public app: express.Application;
@@ -36,7 +35,7 @@ class Server {
      * Setup routing on the server.
      */
     private routes(): void {
-        this.app.use('/', new RootRoutes().router);
+        this.app.use('/v1', new V1().router);
     }
 
     /**
@@ -45,7 +44,7 @@ class Server {
     public start(): void {
         this.mongodb.connect();
         this.app.listen(config.SERVER_PORT, () => {
-            logger.info(`TypeScript with Express http://localhost:${config.SERVER_PORT}/`);
+            logger.info(`RESTful API listen on http://localhost:${config.SERVER_PORT}/`);
         });
     }
 }
