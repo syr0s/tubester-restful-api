@@ -37,16 +37,17 @@ abstract class Authentication extends Endpoint {
      * a json web token.
      */
     protected login(): void {
-        this.validatePayload();
-        this.userController.readOne(this.request.body.username).then((result) => {
-            if (this.empty(result)) this.status(401);
-            if (this.request.body.passwordHash != result.passwordHash) {
-                this.status(403);
-                return;
-            }  
-            this.uuid = result._id.toString();
-            this.createJWT(result._id.toString());
-         });
+        if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
+            this.userController.readOne(this.request.body.username).then((result) => {
+                if (this.empty(result)) this.status(401);
+                if (this.request.body.passwordHash != result.passwordHash) {
+                    this.status(403);
+                    return;
+                }  
+                this.uuid = result._id.toString();
+                this.createJWT(result._id.toString());
+            });
+        }
     }
 
     /**
@@ -89,27 +90,26 @@ abstract class Authentication extends Endpoint {
     }
 
     /**
-     * Validate that the given payload contains the keys `username` and
-     * `passwordHash` and that the keys contains values.
+     * Validate that a given payload has all required keys and contains values.
+     * Ignores all keys inside the payload which are not required.
+     * @param keys required keys in the payload
+     * @param payload to inspect
      */
-    protected validatePayload(): void {
-        if (!this.hasKey(this.request.body, 'username')) {
-            this.status(400);
-            return;
+    protected validatePayload(keys: string[], payload: any): boolean | void {
+        for (let i: number = 0; i < keys.length; i++) {
+            console.log(keys[i])
+            console.log(payload)
+            if (!this.hasKey(payload, keys[i])) {
+                this.status(400);
+                return;
+            }
+            // Check if the key contains any value
+            if (this.empty(payload[keys[i]])){
+                this.status(400);
+                return;
+            }
         }
-        if (!this.hasKey(this.request.body, 'passwordHash')) {
-            this.status(400);
-            return;
-        }
-        if(this.empty(this.request.body.username)) {
-            this.status(400);
-            return;
-        }
-        if(this.empty(this.request.body.passwordHash)) {
-            this.status(400);
-            return;
-        }
-        return;
+        return true;
     }
 }
 

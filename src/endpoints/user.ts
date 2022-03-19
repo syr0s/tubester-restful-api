@@ -7,7 +7,6 @@ class EndpointUser extends Authentication {
      */
     protected get(): void {
         if(this.validateJWT()) {
-            // deactivate all system fields and the passwordHash field
             const projection = {
                 _id: 0,
                 passwordHash: 0,
@@ -25,21 +24,21 @@ class EndpointUser extends Authentication {
      */
     protected post(): void {
         if (this.validateJWT()) {
-            this.validatePayload();
-            // Check if the requested new username is already in the database
-            this.userController.readOne(this.request.body.username).then((result) => {
-                if (!result) {
-                    const data = {
-                        username: this.request.body.username,
-                        passwordHash: this.request.body.passwordHash,
+            if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
+                this.userController.readOne(this.request.body.username).then((result) => {
+                    if (!result) {
+                        const data = {
+                            username: this.request.body.username,
+                            passwordHash: this.request.body.passwordHash,
+                        }
+                        this.userController.update(String(this.uuid), data)
+                        this.status(201);
+                        this.response.end();
+                    } else {
+                        this.status(400);
                     }
-                    this.userController.update(String(this.uuid), data)
-                    this.status(201);
-                    this.response.end();
-                } else {
-                    this.status(400);
-                }
-            });
+                });
+            }
         }
     }
     
@@ -54,20 +53,21 @@ class EndpointUser extends Authentication {
      */
     protected put(): void {
         if (this.validateJWT()) {
-            this.validatePayload();
-            this.userController.readOne(this.request.body.username).then((result) => {
-                if (!result) {
-                    const data: object = {
-                        username: this.request.body.username,
-                        passwordHash: this.request.body.passwordHash,
-                    };
-                    this.userController.create(data);
-                    this.status(201);
-                    this.response.end();
-                } else {
-                    this.status(400);
-                }
-            });
+            if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
+                this.userController.readOne(this.request.body.username).then((result) => {
+                    if (!result) {
+                        const data: object = {
+                            username: this.request.body.username,
+                            passwordHash: this.request.body.passwordHash,
+                        };
+                        this.userController.create(data);
+                        this.status(201);
+                        this.response.end();
+                    } else {
+                        this.status(400);
+                    }
+                });
+            }
         }
     }
     // TODO implement DELETE to delete a user

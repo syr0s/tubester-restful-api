@@ -46,6 +46,9 @@ class Server {
         this.app.listen(config.SERVER_PORT, () => {
             logger.info(`RESTful API listen on http://localhost:${config.SERVER_PORT}/`);
         });
+        if (config.DEBUG) {
+            logger.warn('You are running the RESTful API in debug mode. Please disable this feature in production.');
+        }
     }
 }
 
