@@ -39,13 +39,18 @@ abstract class Authentication extends Endpoint {
     protected login(): void {
         if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
             this.userController.readOne(this.request.body.username).then((result) => {
-                if (this.empty(result)) this.status(401);
-                if (this.request.body.passwordHash != result.passwordHash) {
-                    this.status(403);
-                    return;
-                }  
-                this.uuid = result._id.toString();
-                this.createJWT(result._id.toString());
+                // FIXME empty() method awaits string!
+                if (!result) {
+                    this.status(401);
+                } else {
+                    if (this.request.body.passwordHash != result.passwordHash) {
+                        this.status(403);
+                        return;
+                    }  
+                    this.uuid = result._id.toString();
+                    this.createJWT(result._id.toString());
+                }
+                
             });
         }
     }

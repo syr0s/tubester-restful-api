@@ -50,7 +50,7 @@ export class UserController extends Controller {
     }
 
     // TODO implement method
-    public del(key: string): Promise<void> {
-        throw new Error('del method not implemented for Users');
+    public async del(key: string): Promise<void> {
+        await User.findByIdAndDelete(key).exec();
     }
 }

@@ -168,8 +168,6 @@ abstract class Endpoint {
      */
      protected validatePayload(keys: string[], payload: any): boolean | void {
         for (let i: number = 0; i < keys.length; i++) {
-            console.log(keys[i])
-            console.log(payload)
             if (!this.hasKey(payload, keys[i])) {
                 this.status(400);
                 return;

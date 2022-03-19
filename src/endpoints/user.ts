@@ -62,7 +62,7 @@ class EndpointUser extends Authentication {
                         };
                         this.userController.create(data);
                         this.status(201);
-                        this.response.end();
+                        this.response.send();
                     } else {
                         this.status(400);
                     }
@@ -70,7 +70,26 @@ class EndpointUser extends Authentication {
             }
         }
     }
-    // TODO implement DELETE to delete a user
+    /**
+     * `DELETE` method of the endpoint `/v1/user`. Will delete the user which is given in 
+     * the request body object.
+     */
+    protected del(): void {
+        if (this.validateJWT()) {
+            if (this.validatePayload(['uuid'], this.request.body)) {
+                this.userController.readById(this.request.body.uuid).then((result) => {
+                    console.log(result)
+                    if (this.hasKey(result, 'username')) {
+                        this.userController.del(this.request.body.uuid);
+                        this.status(200);
+                        this.response.send();
+                    } else {
+                        this.status(400);
+                    }
+                }) 
+            }
+        }
+    }
 }
 
 export default EndpointUser;
