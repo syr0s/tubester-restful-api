@@ -20,7 +20,7 @@ export class UserController extends Controller {
      * @throws
      * */
     public readAll(): Promise<object[]> {
-        throw new Error('readAll method not implemented for Users');
+        throw new Error('readAll method not implemented for UserController');
     }
 
     /**
@@ -49,7 +49,10 @@ export class UserController extends Controller {
         await User.findByIdAndUpdate(key, data).exec();
     }
 
-    // TODO implement method
+    /**
+     * Delete a record in MongoDB
+     * @param key the `_id` of the record
+     */
     public async del(key: string): Promise<void> {
         await User.findByIdAndDelete(key).exec();
     }

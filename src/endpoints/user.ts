@@ -1,26 +1,64 @@
+import { Request, Response } from "express";
 import Authentication from "../interfaces/authentication";
 
 class EndpointUser extends Authentication {
+
+    /**
+     * User endpoint of the RESTful API which is reachable at
+     * `/v1/user`. The endpoint provides the following methods:
+     * - `GET`: Returns the user data of the requesting user
+     * - `POST`: Updates the user data of the requesting user
+     * - `PUT`: Creates a new user account on the backend
+     * - `DELETE`: Deletes a user account on the backend
+     * @param request express.js `Request` object 
+     * @param response exporess.js `Response` object
+     */
+    constructor(request: Request, response: Response) {
+        super(request, response);
+    }
     /**
      * `GET` method for the endpoint `/v1/user`. Provides all user
      * information for the loged in user account.
+     * ### Request header
+     * Requires a Bearer token header. Otherwise the endpoint will respond
+     * with http status code `401 - Unauthicated`.
+     * ### Response
+     * Will respond with `content-type: application/json` and http
+     * status code `200 - OK`. The response will have the following body:
+     * - `username`: The username of the loged in user as `string`.
+     * - `uuid`: The unique user id of the user.
      */
     protected get(): void {
         if(this.validateJWT()) {
             const projection = {
-                _id: 0,
                 passwordHash: 0,
                 __v: 0
             }
             this.userController.readById(String(this.uuid), projection).then((result) => {
+                this.setHeaderJson();
                 this.status(200);
-                this.response.send(result);
+                this.response.send({
+                    username: result.username,
+                    uuid: result._id
+                });
             })
         }
     }
     /**
      * `POST` method for the endpoint `/v1/user`. Updates the current user to the
      * new data received within the `request.body`.
+     * ### Request header
+     * Requires a Bearer token header. Otherwise the endpoint will respond
+     * with http status code `401 - Unauthicated`.
+     * ### Request body
+     * The method accepts only request containing the following request body, 
+     * all other requests will be responded with http status code `400 - Bad
+     * Request`.
+     * - `username` the new username for this account
+     * - `passwordHash` the new password hash for this account
+     * ### Response
+     * Will respond with http status code `201 - Created` on successfully updated
+     * records.
      */
     protected post(): void {
         if (this.validateJWT()) {
@@ -43,13 +81,21 @@ class EndpointUser extends Authentication {
     }
     
     /**
-     * Create a new user on the database.
-     * Requires a `username` and `passwordHash` inside the body
-     * request, will otherwise return `400 - Bad Request`. Will
-     * provide a lookup in the database, if the given username
-     * exists, if the username was found the API returns `400 -
-     * Bad Request`. After the user was created the API will
-     * return `201 - Created` to the client.
+     * `PUT` method of the endpoint `/v1/user`, which creates a new user
+     * account on the backend. 
+     * ### Request header
+     * Requires a Bearer token header. Otherwise the endpoint will respond
+     * with http status code `401 - Unauthicated`.
+     * ### Request body
+     * The endpoint requires the following parameters as request body, requests
+     * misisng this information, will be responded with http status code `400 -
+     * Bad Request`.
+     * - `username`: the username for the new account. If the passed in username
+     * allready exists, the endpoint will respond with http status code `401 -
+     * Bad Request`.
+     * - `passwordHash`: the password hash for the new account.
+     * ### Response
+     * The endpoint will respond with http status code `201 - Created` on success.
      */
     protected put(): void {
         if (this.validateJWT()) {
@@ -73,6 +119,15 @@ class EndpointUser extends Authentication {
     /**
      * `DELETE` method of the endpoint `/v1/user`. Will delete the user which is given in 
      * the request body object.
+     * ### Request header
+     * Requires a Bearer token header. Otherwise the endpoint will respond
+     * with http status code `401 - Unauthicated`.
+     * ### Request body
+     * The method requires the `uuid` as body parameter. Requesting this method without a
+     * valid `uuid` will cause a server response `400 - Bad Request`.
+     * ### Response
+     * The endpoint will respond with http status code `200 - OK` on successfully deleted
+     * user account.
      */
     protected del(): void {
         if (this.validateJWT()) {
