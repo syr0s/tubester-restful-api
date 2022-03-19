@@ -18,7 +18,7 @@ abstract class Controller {
      * Read all records from the MongoDB
      * @returns array containing result objects
      */
-    public abstract readAll(): Promise<object[]>;
+    public abstract readAll(projection?: object): Promise<object[]>;
 
     /**
      * Query for a specific record id.

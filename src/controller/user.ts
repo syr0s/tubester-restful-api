@@ -19,8 +19,9 @@ export class UserController extends Controller {
      * Not implemented
      * @throws
      * */
-    public readAll(): Promise<object[]> {
-        throw new Error('readAll method not implemented for UserController');
+    public async readAll(projection?: object): Promise<object[]> {
+        const userData = await User.find({}, projection).lean().exec();
+        return userData;
     }
 
     /**
