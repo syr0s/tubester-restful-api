@@ -1,7 +1,6 @@
 import { Request, Response } from "express-serve-static-core";
 import Authentication from "../interfaces/authentication";
 
-// TODO this endpoint should be only accessable for admin users
 class EndpointUserAdmin extends Authentication {
     /**
      * User/admin endpoint of the RESTful API which is reachable at
