@@ -148,11 +148,39 @@ abstract class Endpoint {
         return false;
     }
 
-    protected empty(obj: string | any): boolean {
-        if (obj.length === 0) {
+    /**
+     * Check if a given `string` is empty or not.
+     * @param string `string` to check
+     * @returns 
+     */
+    protected empty(string: string | any): boolean {
+        if (string.length === 0) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Validate that a given payload has all required keys and contains values.
+     * Ignores all keys inside the payload which are not required.
+     * @param keys required keys in the payload
+     * @param payload to inspect
+     */
+     protected validatePayload(keys: string[], payload: any): boolean | void {
+        for (let i: number = 0; i < keys.length; i++) {
+            console.log(keys[i])
+            console.log(payload)
+            if (!this.hasKey(payload, keys[i])) {
+                this.status(400);
+                return;
+            }
+            // Check if the key contains any value
+            if (this.empty(payload[keys[i]])){
+                this.status(400);
+                return;
+            }
+        }
+        return true;
     }
 }
 
