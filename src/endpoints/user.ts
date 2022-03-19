@@ -32,6 +32,7 @@ class EndpointUser extends Authentication {
         if(this.validateJWT()) {
             const projection = {
                 passwordHash: 0,
+                userGroup: 0,
                 __v: 0
             }
             this.userController.readById(String(this.uuid), projection).then((result) => {
@@ -99,12 +100,13 @@ class EndpointUser extends Authentication {
      */
     protected put(): void {
         if (this.validateJWT()) {
-            if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
+            if (this.validatePayload(['username', 'passwordHash', 'userGroup'], this.request.body)) {
                 this.userController.readOne(this.request.body.username).then((result) => {
                     if (!result) {
                         const data: object = {
                             username: this.request.body.username,
                             passwordHash: this.request.body.passwordHash,
+                            userGroup: this.request.body.userGroup,
                         };
                         this.userController.create(data);
                         this.status(201);

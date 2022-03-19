@@ -1,17 +1,15 @@
-import { Document, Schema, Model, model, Error } from 'mongoose';
+import { Document, Schema, Model, model } from 'mongoose';
 
 export interface UserInterface extends Document  {
-    // TODO how to autoincrement the userId?
-    userId: String;
     username: String;
     passwordHash: String;
+    userGroup: Number;
 }
 
 export const userSchema = new Schema({
-    // TODO how to autoincrement the userId?
-    userId: String,
     username: String,
     passwordHash: String,
+    userGroup: Number,
 });
 
 export const User: Model<UserInterface> = model<UserInterface>('User', userSchema);

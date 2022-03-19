@@ -23,6 +23,8 @@ abstract class Authentication extends Endpoint {
     protected userController: Controller = new UserController();
     /** The unique user id */
     protected uuid?: string;
+    /** The usergroup the user belongs to */
+    protected userGroup?: number;
     /** JWT token expires after 10 days */
     private expiry: number = 86400000 * 10;
 
@@ -48,7 +50,12 @@ abstract class Authentication extends Endpoint {
                         return;
                     }  
                     this.uuid = result._id.toString();
-                    this.createJWT(result._id.toString());
+                    const data: Jwt = {
+                        time: Date.now(),
+                        uuid: String(this.uuid),
+                        userGroup: result.userGroup || 0,
+                    };
+                    this.createJWT(data);
                 }
                 
             });
@@ -59,11 +66,7 @@ abstract class Authentication extends Endpoint {
      * Create a json web token
      * @param userId the user id (_id in MongoDB)
      */
-    protected createJWT(userId: string): void {
-        let data:Jwt = {
-            time: Date.now(),
-            uuid: userId,
-        }
+    protected createJWT(data: Jwt): void {
         try {
             const token = jwt.sign(data, this.jwtSecretKey);
             this.status(200);
@@ -86,6 +89,7 @@ abstract class Authentication extends Endpoint {
             if (verify) {
                 if (verify.time + this.expiry > Date.now()) {
                     this.uuid = verify.uuid;
+                    this.userGroup = verify.userGroup;
                 return true;
                 }
             }

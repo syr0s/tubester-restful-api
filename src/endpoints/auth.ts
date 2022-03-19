@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Authentication from "../interfaces/authentication";
+import Jwt from "../interfaces/jwt";
 
 class EndpointAuth extends Authentication {
     /**
@@ -45,7 +46,12 @@ class EndpointAuth extends Authentication {
      */
     protected post(): void {
         if (this.validateJWT()) {
-            if(this.uuid) this.createJWT(this.uuid);
+            const data: Jwt = {
+                time: Date.now(),
+                uuid: String(this.uuid),
+                userGroup: this.userGroup || 0,
+            }
+            if(this.uuid) this.createJWT(data);
         }
     }
 }
