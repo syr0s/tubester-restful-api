@@ -2,6 +2,7 @@ import 'dotenv/config';
 import fs from 'fs';
 import ini from 'ini';
 import Configuration from "../interfaces/config";
+import { toBoolean } from '../utils/boolean';
 
 // Load and process `.env` file.
 require('dotenv').config();
@@ -22,19 +23,19 @@ const config: Configuration = {
     SERVER_NAME: process.env.SERVER_NAME || 'Tubester',
     SERVER_VERSION: process.env.SERVER_VERSION || 'n.a.',
     SERVER_PORT: Number(process.env.SERVER_PORT) || 3000,
-    DEBUG: Boolean(process.env.DEBUG) || false,
-    LOG_TO_FILE: Boolean(process.env.LOG_TO_FILE) || true,
+    DEBUG: toBoolean(process.env.DEBUG) || false,
+    LOG_TO_FILE: toBoolean(process.env.LOG_TO_FILE) || true,
     LOG_LEVEL: process.env.LOG_LEVEL || 'info',
     LOG_PATH: configFile.logging.path || 'logs',
     LOG_FILE: configFile.logging.file || 'api_def.log',
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || '',
-    REGISTRATION_ENABLED: Boolean(process.env.REGISTRATION_ENABLED) || true,
-    TWO_FACTOR_AUTH: Boolean(process.env.TWO_FACTOR_AUTH) || false,
-    E_MAIL_FEATURE_ENABLED: Boolean(process.env.E_MAIL_FEATURE_ENABLED) || true,
+    REGISTRATION_ENABLED: toBoolean(process.env.REGISTRATION_ENABLED) || true,
+    TWO_FACTOR_AUTH: toBoolean(process.env.TWO_FACTOR_AUTH) || false,
+    E_MAIL_FEATURE_ENABLED: toBoolean(process.env.E_MAIL_FEATURE_ENABLED) || true,
     E_MAIL_SERVICE: process.env.E_MAIL_SERVICE,
     E_MAIL_USER: process.env.E_MAIL_USER,
     E_MAIL_PASSWORD: process.env.E_MAIL_PASSWORD,
-    E_MAIL_USE_OAUTH2: Boolean(process.env.E_MAIL_USE_OAUTH2) || false,
+    E_MAIL_USE_OAUTH2: toBoolean(process.env.E_MAIL_USE_OAUTH2) || false,
     E_MAIL_CLIENT_ID: process.env.E_MAIL_CLIENT_ID,
     E_MAIL_CLIENT_SECRET: process.env.E_MAIL_CLIENT_SECRET,
     E_MAIL_REFRESH_TOKEN: process.env.E_MAIL_REFRESH_TOKEN,
