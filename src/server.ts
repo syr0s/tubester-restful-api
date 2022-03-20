@@ -49,6 +49,9 @@ class Server {
         if (config.DEBUG) {
             logger.warn('You are running the RESTful API in debug mode. Please disable this feature in production.');
         }
+        if (config.API_KEY === 'example') {
+            logger.warn('You are using the default value of the API_KEY variable. You should really set a different one in production');
+        }
     }
 }
 

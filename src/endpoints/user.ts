@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
+import crypto from 'crypto';
+import config from "../config/main";
 import Authentication from "../interfaces/authentication";
+import { UserInterface } from "../models/user";
 
 class EndpointUser extends Authentication {
 
@@ -82,42 +85,45 @@ class EndpointUser extends Authentication {
     }
     
     /**
-     * `PUT` method of the endpoint `/v1/user`, which creates a new user
-     * account on the backend. 
-     * ### Request header
-     * Requires a Bearer token header. Otherwise the endpoint will respond
-     * with http status code `401 - Unauthicated`.
-     * ### Request body
-     * The endpoint requires the following parameters as request body, requests
-     * misisng this information, will be responded with http status code `400 -
-     * Bad Request`.
-     * - `username`: the username for the new account. If the passed in username
-     * allready exists, the endpoint will respond with http status code `401 -
-     * Bad Request`.
-     * - `passwordHash`: the password hash for the new account.
-     * ### Response
-     * The endpoint will respond with http status code `201 - Created` on success.
+     * This is the endpoint for registring a new user on the backend. The endpoint
+     * is typically used on your `register` page inside your application.
      */
     protected put(): void {
-        if (this.validateJWT()) {
-            if (this.validatePayload(['username', 'passwordHash', 'userGroup'], this.request.body)) {
+        if (config.REGISTRATION_ENABLED) {
+            if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
                 this.userController.readOne(this.request.body.username).then((result) => {
-                    if (!result) {
-                        const data: object = {
+                    if(!result) {
+                        const data:any = {
                             username: this.request.body.username,
                             passwordHash: this.request.body.passwordHash,
-                            userGroup: this.request.body.userGroup,
-                        };
+                            // always set userGroup to 0 which is a normal user
+                            userGroup: 0,
+                            timestampCreation: Date.now(),
+                        }
+                        if(config.TWO_FACTOR_AUTH) {
+                            // TODO create and send email
+                            const tmpValidationEndpoint: string = 
+                                this.request.body.username + config.API_KEY + this.request.body.passwordHash;
+                            data.tmpAccount = config.TWO_FACTOR_AUTH;
+                            data.tmpValidationEndpoint = crypto.createHmac('sha256', tmpValidationEndpoint).digest('hex');
+                        }
                         this.userController.create(data);
                         this.status(201);
                         this.response.send();
-                    } else {
-                        this.status(400);
+                        return;
                     }
                 });
+            } else {
+                this.status(400);
+                return;
             }
+        } else {
+            this.status(405);
+            return;
         }
+        
     }
+    
     /**
      * `DELETE` method of the endpoint `/v1/user`. Will delete the user which is given in 
      * the request body object.

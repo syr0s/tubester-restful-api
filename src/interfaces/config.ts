@@ -96,6 +96,37 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     JWT_SECRET_KEY: string;
+
+    /**
+     * Enables or disables the feature to register new users on the backend.
+     * 
+     * Default: true
+     * 
+     * The value is set using the `.env` file.
+     */
+     REGISTRATION_ENABLED: boolean;
+
+    /**
+     * This variable activates or deactivates the two-factore authentication
+     * using an email validation feature, on new registered accounts.
+     * 
+     * Default: true
+     * 
+     * The value is set using the `.env` file.
+     */
+     TWO_FACTOR_AUTH: boolean;
+
+     /**
+      * This variable contains the API key, which is used in various algorhytms to
+      * encrypt/decrypt data or by the creation of hash values. It should be a
+      * long and unqiue `string`.
+      * 
+      * Default: example
+      * 
+      * The value is set using the `.env` file.
+      */
+    API_KEY: string;
+
     /**
      * Hostname or IP address the MongoDB server is reachable.
      * 
