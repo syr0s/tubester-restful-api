@@ -5,7 +5,7 @@ import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
 import { V1 } from './routes/v1';
-import Routes from './interfaces/routes';
+import FatalError from './utils/error_handler';
 
 class Server {
     public app: express.Application;
@@ -39,9 +39,48 @@ class Server {
     }
 
     /**
+     * Self check before starting the server.
+     */
+    private selfCheck(): void {
+        this.selfCheckJWT();
+        this.selfCheckJWT();
+        this.selfCheckEmail();
+    }
+
+    /** Check if a JWT_SECRET_KEY is set */
+    private selfCheckJWT(): void {
+        if (!config.JWT_SECRET_KEY || config.JWT_SECRET_KEY.length == 0) {
+            throw new FatalError('JWT_SECRET_KEY is empty please set up a value using environment variable');
+        }
+    }
+    
+    /** Check if the email feature is enabled if server requires two factor auth */
+    private selfCheckTwoFactor(): void {
+        if (config.TWO_FACTOR_AUTH && !config.E_MAIL_FEATURE_ENABLED) {
+            throw new FatalError('TWO_FACTOR_AUTH requires E_MAIL_FEATURE_ENABLED to true');
+        }
+    }
+
+    /** Check for proper email setup */
+    private selfCheckEmail(): void {
+        if (config.E_MAIL_USE_OAUTH2) {
+            if (
+                !config.E_MAIL_USER ||
+                !config.E_MAIL_PASSWORD ||
+                !config.E_MAIL_CLIENT_ID ||
+                !config.E_MAIL_CLIENT_SECRET ||
+                !config.E_MAIL_REFRESH_TOKEN
+            ) {
+                throw new FatalError('E-Mail setup not completed! Please re-check your environment variables for a proper setup');
+            }
+        }
+    }
+
+    /**
      * Starts the server.
      */
     public start(): void {
+        this.selfCheck();
         this.mongodb.connect();
         this.app.listen(config.SERVER_PORT, () => {
             logger.info(`RESTful API listen on http://localhost:${config.SERVER_PORT}/`);

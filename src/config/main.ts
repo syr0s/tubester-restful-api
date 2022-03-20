@@ -29,18 +29,21 @@ const config: Configuration = {
     LOG_FILE: configFile.logging.file || 'api_def.log',
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || '',
     REGISTRATION_ENABLED: Boolean(process.env.REGISTRATION_ENABLED) || true,
-    TWO_FACTOR_AUTH: Boolean(process.env.TWO_FACTOR_AUTH) || true,
+    TWO_FACTOR_AUTH: Boolean(process.env.TWO_FACTOR_AUTH) || false,
+    E_MAIL_FEATURE_ENABLED: Boolean(process.env.E_MAIL_FEATURE_ENABLED) || true,
+    E_MAIL_SERVICE: process.env.E_MAIL_SERVICE,
+    E_MAIL_USER: process.env.E_MAIL_USER,
+    E_MAIL_PASSWORD: process.env.E_MAIL_PASSWORD,
+    E_MAIL_USE_OAUTH2: Boolean(process.env.E_MAIL_USE_OAUTH2) || false,
+    E_MAIL_CLIENT_ID: process.env.E_MAIL_CLIENT_ID,
+    E_MAIL_CLIENT_SECRET: process.env.E_MAIL_CLIENT_SECRET,
+    E_MAIL_REFRESH_TOKEN: process.env.E_MAIL_REFRESH_TOKEN,
     API_KEY: process.env.API_KEY || 'example',
     MONGODB_HOST: process.env.MONGODB_HOST || 'tubester-mongodb',
     MONGODB_PORT: Number(process.env.MONGODB_PORT) || 27017,
     MONGODB_DATABASE: process.env.MONNGODB_DATABASE || 'tubester',
     MONGODB_USER: process.env.MONGODB_USER || 'tubester',
     MONGODB_PASSWORD: process.env.MONGODB_PASSWORD || 'exampleP4ssword',
-}
-
-// Throw an error if `JWT_SECRET_KEY` is not set
-if (!config.JWT_SECRET_KEY || config.JWT_SECRET_KEY.length == 0) {
-    throw new Error('JWT_SECRET_KEY is empty please set up a value using environment variable');
 }
 
 export default config;

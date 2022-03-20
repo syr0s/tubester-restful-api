@@ -13,6 +13,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     SERVER_NAME: string;
+
     /**
      * This is the version the RESTful API currently running on. This value is used
      * to download the appropriate docker image. The value will be also returned
@@ -23,6 +24,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     SERVER_VERSION: string;
+
     /**
      * Defines the port the RESTful API is listening on. As the server is typically
      * running in a docker setup, there is normally no need to change this value.
@@ -36,6 +38,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     SERVER_PORT: number;
+
     /**
      * Sets the RESTful API into debug mode. This will output more logs. This value
      * is typically set to true in development environments only.
@@ -45,6 +48,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     DEBUG: boolean;
+
     /**
      * Activates / Deactives the log to file functionality of the server. Instead
      * of logging to the console and a dedicated log file, the server will only
@@ -55,6 +59,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     LOG_TO_FILE: boolean;
+
     /**
      * Sets up the log level of the events.
      * - `info`: Will log a lot of informational stuff during the runtime.
@@ -68,6 +73,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     LOG_LEVEL: string;
+
     /**
      * The path to store the log files. Please make sure that the node
      * user inside the container has read/write access to this path.
@@ -77,6 +83,7 @@ interface Configuration {
      * The value is set using the `config.ini` file.
      */
     LOG_PATH: string;
+
     /**
      * Name of the log file. Please make sure that the node user inside
      * the container has read/write access to this file.
@@ -86,6 +93,7 @@ interface Configuration {
      * The value is set using the `config.ini` file.
      */
     LOG_FILE: string;
+
     /**
      * Secret key to encrypt / sign the json web token. Please make sure
      * that this variable contains a value, otherwise the server will 
@@ -98,25 +106,6 @@ interface Configuration {
     JWT_SECRET_KEY: string;
 
     /**
-     * Enables or disables the feature to register new users on the backend.
-     * 
-     * Default: true
-     * 
-     * The value is set using the `.env` file.
-     */
-     REGISTRATION_ENABLED: boolean;
-
-    /**
-     * This variable activates or deactivates the two-factore authentication
-     * using an email validation feature, on new registered accounts.
-     * 
-     * Default: true
-     * 
-     * The value is set using the `.env` file.
-     */
-     TWO_FACTOR_AUTH: boolean;
-
-     /**
       * This variable contains the API key, which is used in various algorhytms to
       * encrypt/decrypt data or by the creation of hash values. It should be a
       * long and unqiue `string`.
@@ -128,13 +117,108 @@ interface Configuration {
     API_KEY: string;
 
     /**
+     * Enables or disables the feature to register new users on the backend.
+     * 
+     * Default: true
+     * 
+     * The value is set using the `.env` file.
+     */
+    REGISTRATION_ENABLED: boolean;
+
+    /**
+     * This variable activates or deactivates the two-factore authentication
+     * using an email validation feature, on new registered accounts.
+     * 
+     * Default: true
+     * 
+     * The value is set using the `.env` file.
+     */
+    TWO_FACTOR_AUTH: boolean;
+
+    /**
+     * Enable or disable the e-mail feature.
+     * 
+     * Default: true
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_FEATURE_ENABLED: boolean;
+
+    /**
+     * Service name to use for outgoing e-mails from your server.
+     * 
+     * Default: `null`
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_SERVICE?: string;
+
+    /**
+     * The user of the email service.
+     * 
+     * Default: `null`
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_USER?: string;
+
+    /**
+     * The password for the e-mail user
+     * 
+     * Default: `null`
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_PASSWORD?: string;
+
+    /**
+     * Activate OAuth2 if your e-mail provider accepts this. This will secure
+     * your e-mails more then just using your credentials.
+     * For more details, using Google gmail, please visit
+     * https://www.geeksforgeeks.org/how-to-send-email-using-node-js/
+     * 
+     * Default: `false`
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_USE_OAUTH2: boolean;
+
+    /**
+     * The client id provided by your e-mail provider for using OAuth2.
+     * 
+     * Default: null
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_CLIENT_ID?: string;
+
+    /**
+     * The client secret provided by your e-mail provider for using OAuth2.
+     * 
+     * Default: null
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_CLIENT_SECRET?: string;
+
+    /**
+     * The refresh token provided by your e-mail provider for using OAuth2.
+     * 
+     * Default: null
+     * 
+     * The value is set using the `.env` file.
+     */
+    E_MAIL_REFRESH_TOKEN?: string;
+
+    /**
      * Hostname or IP address the MongoDB server is reachable.
      * 
-     * Default: tubester-mongodb
+     * Default: `tubester-mongodb`
      * 
      * The value is set using the `.env` file.
      */
     MONGODB_HOST: string;
+
     /**
      * The port the MongoDB server is listen on.
      * 
@@ -143,6 +227,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     MONGODB_PORT: number;
+
     /**
      * Database name inside the MongoDB instance.
      * 
@@ -151,6 +236,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     MONGODB_DATABASE: string;
+
     /**
      * User which has read and write access on the database.
      * 
@@ -159,6 +245,7 @@ interface Configuration {
      * The value is set using the `.env` file.
      */
     MONGODB_USER: string;
+
     /**
      * Password of the database user.
      * 
