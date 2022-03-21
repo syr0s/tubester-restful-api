@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import crypto from 'crypto';
 import config from "../config/main";
 import Authentication from "../interfaces/authentication";
-import { UserInterface } from "../models/user";
 
 class EndpointUser extends Authentication {
 
