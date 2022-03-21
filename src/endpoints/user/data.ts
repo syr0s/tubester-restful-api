@@ -78,6 +78,7 @@ export class EndpointUserData extends Authentication {
                         return;
                     } else {
                         this.userController.update(String(this.uuid), data);
+                        this.setHeaderJson();
                         this.status(200);
                         this.response.send();
                     }

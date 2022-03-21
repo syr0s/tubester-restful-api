@@ -61,35 +61,7 @@ class EndpointUser extends Authentication {
         
     }
     
-    /**
-     * `DELETE` method of the endpoint `/v1/user`. Will delete the user which is given in 
-     * the request body object.
-     * ### Request header
-     * Requires a Bearer token header. Otherwise the endpoint will respond
-     * with http status code `401 - Unauthicated`.
-     * ### Request body
-     * The method requires the `uuid` as body parameter. Requesting this method without a
-     * valid `uuid` will cause a server response `400 - Bad Request`.
-     * ### Response
-     * The endpoint will respond with http status code `200 - OK` on successfully deleted
-     * user account.
-     */
-    protected del(): void {
-        if (this.validateJWT()) {
-            if (this.validatePayload(['uuid'], this.request.body)) {
-                this.userController.readById(this.request.body.uuid).then((result) => {
-                    console.log(result)
-                    if (this.hasKey(result, 'username')) {
-                        this.userController.del(this.request.body.uuid);
-                        this.status(200);
-                        this.response.send();
-                    } else {
-                        this.status(400);
-                    }
-                }) 
-            }
-        }
-    }
+    
 }
 
 export default EndpointUser;
