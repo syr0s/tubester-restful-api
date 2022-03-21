@@ -2,6 +2,8 @@ site_name: Tubester RESTful API
 nav:
     - Home: index.md
     - Endpoints:
-      - '/user/login': 'endpoints/user/login.md'
-      - '/user/renew': 'endpoints/user/renew.md'
+      - '/user':
+        - '/data': 'endpoints/user/data.md'
+        - '/login': 'endpoints/user/login.md'
+        - '/renew': 'endpoints/user/renew.md'
 theme: readthedocs

@@ -10,7 +10,7 @@ The endpoint didn´t require any authentication and is public accessable.
 ### Header
 The endpoint will ignore any header.
 
-## Request: parameters
+### Request: parameters
 The endpoint will ignore any request parameter / query arguments.
 
 ### Request: body
@@ -23,7 +23,7 @@ The endpoint requires the following request body arguments:
 #### Invalid response
 The endpoint will respond, based on the clients request.
 - If one or more request body arguments are missing, the endpoint will respond with http status code `400 - Bad Request`.
-- If the requested `email` is not found on the backends` database, the endpoint will respond with http status code `401 - Unauthicated`.
+- If the requested `email` is not found on the backends` database, the endpoint will respond with http status code `401 - Unauthorized`.
 - If the `passwordHash` is not the same one as stored on the backends` database, the endpoint will respond iwth http status code `403 - Forbidden`.
 
 #### Success response

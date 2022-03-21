@@ -11,7 +11,7 @@ The endpoint requires a valid Bearer authentication token / [`json web token`](.
 ### Header
 The endpoint will ignore any header.
 
-## Request: parameters
+### Request: parameters
 The endpoint will ignore any request parameter.
 
 ### Request: body
@@ -19,7 +19,7 @@ The endpoint will ignore any request body arguments.
 
 ### Response
 #### Invalid response
-By using an invalid token, the endpoint will respond with http status code `401 - Unauthenticated`.
+By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
 
 #### Success response
 The endpoint will respond, with http status code `200 - OK` on a successfull request and will deliver the [`json web token`](../../data/jwt.md) to the client as `Content-Type: text/plain`.
