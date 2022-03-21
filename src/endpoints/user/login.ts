@@ -17,7 +17,7 @@ export class EndpointUserLogin extends Authentication {
     }
 
     /**
-     * `GET` endpoint of `/v1/auth` which ressponse with a `json web token`
+     * `GET` endpoint of `/user/login` which ressponse with a `json web token`
      * on valid credentials.
      * ### Request body
      * The endpoint requires the following body parameters. The endpoint

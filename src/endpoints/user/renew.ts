@@ -21,7 +21,7 @@ export class EndpointUserRenew extends Authentication {
     }
 
     /** 
-     * `GET` endpoint of `/v1/auth` which re-news the `json web token` on
+     * `GET` endpoint of `/user/renew` which re-news the `json web token` on
      * a valid `jwt`.
      * ### Request header
      * Requires a Bearer token header. Otherwise the endpoint will respond

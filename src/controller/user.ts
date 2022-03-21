@@ -10,7 +10,7 @@ export class UserController extends Controller {
      */
     public async readOne(username: string, projection?: object): Promise<any> {
         const user = await User.findOne({
-            username: username
+            email: username
         },projection).lean().exec();
         return user;
     }

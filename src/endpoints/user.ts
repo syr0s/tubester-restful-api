@@ -18,70 +18,8 @@ class EndpointUser extends Authentication {
     constructor(request: Request, response: Response) {
         super(request, response);
     }
-    /**
-     * `GET` method for the endpoint `/v1/user`. Provides all user
-     * information for the loged in user account.
-     * ### Request header
-     * Requires a Bearer token header. Otherwise the endpoint will respond
-     * with http status code `401 - Unauthicated`.
-     * ### Response
-     * Will respond with `content-type: application/json` and http
-     * status code `200 - OK`. The response will have the following body:
-     * - `username`: The username of the loged in user as `string`.
-     * - `uuid`: The unique user id of the user.
-     */
-    protected get(): void {
-        if(this.validateJWT()) {
-            const projection = {
-                passwordHash: 0,
-                userGroup: 0,
-                __v: 0
-            }
-            this.userController.readById(String(this.uuid), projection).then((result) => {
-                this.setHeaderJson();
-                this.status(200);
-                this.response.send({
-                    username: result.username,
-                    uuid: result._id
-                });
-            })
-        }
-    }
-    /**
-     * `POST` method for the endpoint `/v1/user`. Updates the current user to the
-     * new data received within the `request.body`.
-     * ### Request header
-     * Requires a Bearer token header. Otherwise the endpoint will respond
-     * with http status code `401 - Unauthicated`.
-     * ### Request body
-     * The method accepts only request containing the following request body, 
-     * all other requests will be responded with http status code `400 - Bad
-     * Request`.
-     * - `username` the new username for this account
-     * - `passwordHash` the new password hash for this account
-     * ### Response
-     * Will respond with http status code `201 - Created` on successfully updated
-     * records.
-     */
-    protected post(): void {
-        if (this.validateJWT()) {
-            if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
-                this.userController.readOne(this.request.body.username).then((result) => {
-                    if (!result) {
-                        const data = {
-                            username: this.request.body.username,
-                            passwordHash: this.request.body.passwordHash,
-                        }
-                        this.userController.update(String(this.uuid), data)
-                        this.status(201);
-                        this.response.end();
-                    } else {
-                        this.status(400);
-                    }
-                });
-            }
-        }
-    }
+    
+    
     
     /**
      * This is the endpoint for registring a new user on the backend. The endpoint
