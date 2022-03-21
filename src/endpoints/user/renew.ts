@@ -33,13 +33,14 @@ export class EndpointUserRenew extends Authentication {
      protected get(): void {
         if (this.validateJWT()) {
             this.userController.readById(String(this.uuid)).then((result) => {
-                this.validUser(result);
-                const data: Jwt = {
-                    time: Date.now(),
-                    uuid: String(this.uuid),
-                    userGroup: this.userGroup || 0,
+                if (this.validUser(result)) {
+                    const data: Jwt = {
+                        time: Date.now(),
+                        uuid: String(this.uuid),
+                        userGroup: this.userGroup || 0,
+                    }
+                    if(this.uuid) this.createJWT(data);
                 }
-                if(this.uuid) this.createJWT(data);
             });
         }
     }

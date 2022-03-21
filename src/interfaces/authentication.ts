@@ -41,11 +41,7 @@ abstract class Authentication extends Endpoint {
     protected login(): void {
         if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
             this.userController.readOne(this.request.body.email).then((result) => {
-                // FIXME empty() method awaits string!
-                this.validUser(result);
-                if (!result) {
-                    this.status(401);
-                } else {
+                if(this.validUser(result)) {
                     if (this.request.body.passwordHash != result.passwordHash) {
                         this.status(403);
                         return;
@@ -57,8 +53,7 @@ abstract class Authentication extends Endpoint {
                         userGroup: result.userGroup || 0,
                     };
                     this.createJWT(data);
-                }
-                
+                }  
             });
         }
     }
@@ -111,7 +106,7 @@ abstract class Authentication extends Endpoint {
      * @param result 
      * @returns 
      */
-    protected validUser(result: any): void {
+    protected validUser(result: any): void | boolean {
         if (!result) {
             this.status(404);
             return;
@@ -126,6 +121,7 @@ abstract class Authentication extends Endpoint {
             this.status(400);
             return;
         }
+        return true;
     }
 }
 

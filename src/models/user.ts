@@ -11,8 +11,7 @@ export interface UserInterface extends Document  {
     validatedAt?: Number;
     active: Boolean;
     validated: Boolean;
-    tmpAccount?: Boolean;
-    tmpValidationEndpoint?: String;
+    confirmEndpoint?: String;
 }
 
 export const userSchema = new Schema({
@@ -26,8 +25,7 @@ export const userSchema = new Schema({
     validatedAt: Number,
     active: Boolean,
     validated: Boolean,
-    tmpAccount: Boolean,
-    tmpValidationEndpoint: String,
+    confirmEndpoint: String,
 });
 
 export const User: Model<UserInterface> = model<UserInterface>('User', userSchema);

@@ -3,9 +3,11 @@ nav:
     - Home: index.md
     - Endpoints:
       - '/user':
+        - '/confirm': 'endpoints/user/confirm.md'
         - '/data': 'endpoints/user/data.md'
         - '/delete': 'endpoints/user/delete.md'
         - '/login': 'endpoints/user/login.md'
+        - '/register': 'endpoints/user/register.md'
         - '/renew': 'endpoints/user/renew.md'
     - Data:
       - 'json web token': 'data/jwt.md'
