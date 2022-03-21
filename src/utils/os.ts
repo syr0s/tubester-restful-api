@@ -17,10 +17,20 @@ export class OS {
         throw new FatalError(`${path} did not exists`);
     }
 
+    /**
+     * Write a given string to a file.
+     * @param path 
+     * @param data 
+     */
     protected writeFile(path: string, data: string): void {
         fs.writeFileSync(path, data);
     }
 
+    /**
+     * Check if a certain file exists.
+     * @param path 
+     * @returns 
+     */
     protected fileExists(path: string): boolean {
         if (fs.existsSync(path)) {
             return true
