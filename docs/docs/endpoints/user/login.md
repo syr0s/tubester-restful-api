@@ -22,6 +22,7 @@ The endpoint requires the following request body arguments:
 
 #### Invalid response
 The endpoint will respond, based on the clients request.
+
 - If one or more request body arguments are missing, the endpoint will respond with http status code `400 - Bad Request`.
 - If the requested `email` is not found on the backends` database, the endpoint will respond with http status code `401 - Unauthorized`.
 - If the user is marked as `active: false`, the endpoint will respond with http status code `400 - Bad Request`.

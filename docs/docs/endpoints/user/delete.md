@@ -19,6 +19,7 @@ The endpoint will ignore any request body arguments.
 ### Response
 #### Invalid response
 The endpoint will respond, based on the clients request.
+
 - By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
 
 #### Success response
