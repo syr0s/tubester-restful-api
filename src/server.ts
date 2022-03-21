@@ -4,10 +4,11 @@ import cors from 'cors';
 import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
-import { V1Routes } from './routes/v1';
+import { UserRoutes } from './routes/user_routes';
 import FatalError from './utils/error_handler';
 import Controller from './interfaces/controller';
 import { UserController } from './controller/user';
+import { AdminRoutes } from './routes/admin_routes';
 
 class Server {
     public app: express.Application;
@@ -38,7 +39,8 @@ class Server {
      * Setup routing on the server.
      */
     private routes(): void {
-        this.app.use('/', new V1Routes().router);
+        this.app.use('/admin', new AdminRoutes().router);
+        this.app.use('/user', new UserRoutes().router);
     }
 
     /**

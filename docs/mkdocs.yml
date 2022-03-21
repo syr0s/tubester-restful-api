@@ -2,6 +2,8 @@ site_name: Tubester RESTful API
 nav:
     - Home: index.md
     - Endpoints:
+      - '/admin':
+        - '/data': 'endpoints/admin/data.md'
       - '/user':
         - '/confirm': 'endpoints/user/confirm.md'
         - '/data': 'endpoints/user/data.md'
