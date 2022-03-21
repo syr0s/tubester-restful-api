@@ -7,4 +7,7 @@ nav:
         - '/delete': 'endpoints/user/delete.md'
         - '/login': 'endpoints/user/login.md'
         - '/renew': 'endpoints/user/renew.md'
+    - Data:
+      - 'json web token': 'data/jwt.md'
+      - 'UserInterface': 'data/user_interface.md'
 theme: readthedocs
