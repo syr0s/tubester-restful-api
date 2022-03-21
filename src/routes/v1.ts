@@ -1,11 +1,12 @@
 import { Request, Response, Router } from "express";
-import EndpointAuth from "../endpoints/auth";
 import EndpointRoot from "../endpoints/root";
 import EndpointUser from "../endpoints/user";
 import { EndpointUserLogin } from "../endpoints/user/login";
+import { EndpointUserRenew } from "../endpoints/user/renew";
 import EndpointUserAdmin from "../endpoints/user_admin";
 import Routes from "../interfaces/routes";
 
+// TODO change this to UserRoutes @ /user after finishing refactoring
 export class V1Routes extends Routes {
 
     public router: Router = Router();
@@ -26,9 +27,6 @@ export class V1Routes extends Routes {
         this.router.all('/', (request: Request, response: Response) => {
             new EndpointRoot(request, response).method();
         });
-        this.router.all('/auth', (request: Request, response: Response) => {
-            new EndpointAuth(request, response).method();
-        });
         this.router.all('/user', (request: Request, response: Response) => {
             new EndpointUser(request, response).method();
         });
@@ -39,6 +37,9 @@ export class V1Routes extends Routes {
         /** ! New routes of the branch */
         this.router.all('/user/login', (request: Request, response: Response) => {
             new EndpointUserLogin(request, response).method();
+        })
+        this.router.all('/user/renew', (request: Request, response: Response) => {
+            new EndpointUserRenew(request, response).method();
         })
     }
 }
