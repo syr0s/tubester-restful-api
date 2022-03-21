@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import EndpointRoot from "../endpoints/root";
+import { EndpointUserConfirm } from "../endpoints/user/confirm";
 import { EndpointUserData } from "../endpoints/user/data";
 import { EndpointUserDelete } from "../endpoints/user/delete";
 import { EndpointUserLogin } from "../endpoints/user/login";
@@ -35,6 +36,9 @@ export class V1Routes extends Routes {
         });
 
         /** ! New routes of the branch */
+        this.router.all('/user/confirm', (request: Request, response: Response) => {
+            new EndpointUserConfirm(request, response).method();
+        });
         this.router.all('/user/data', (request: Request, response: Response) => {
             new EndpointUserData(request, response).method();
         });

@@ -15,6 +15,18 @@ export class UserController extends Controller {
         return user;
     }
 
+    /**
+     * Collects all user data found for the `confirmEndpoint`.
+     * @param id of the confirmation endpoint
+     * @returns 
+     */
+    public async readConfirm(id: string): Promise<any> {
+        const user = await User.findOne({
+            confirmEndpoint: id
+        }).lean().exec();
+        return user;
+    }
+
     /** 
      * Not implemented
      * @throws

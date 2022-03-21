@@ -15,6 +15,11 @@ abstract class Controller {
     public abstract readOne(needle: string, projection?: object): Promise<any>;
 
     /**
+     * Read a defined record from the MongoDB
+     */
+    public abstract readConfirm(id: string): Promise<any>
+
+    /**
      * Read all records from the MongoDB
      * @returns array containing result objects
      */
