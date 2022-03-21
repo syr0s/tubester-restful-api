@@ -1,21 +1,31 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
 export interface UserInterface extends Document  {
-    username: String;
+    email: String;
     passwordHash: String;
     userGroup: Number;
-    timestampCreation: Number;
-    tmpAccount?: Boolean;
-    tmpValidationEndpoint?: String;
+    firstName?: String;
+    lastName?: String;
+    imageFile?: String;
+    createdAt: Number;
+    validatedAt?: Number;
+    active: Boolean;
+    validated: Boolean;
+    confirmEndpoint?: String;
 }
 
 export const userSchema = new Schema({
-    username: String,
+    email: String,
     passwordHash: String,
     userGroup: Number,
-    timestampCreation: Number,
-    tmpAccount: Boolean,
-    tmpValidationEndpoint: String,
+    firstName: String,
+    lastName: String,
+    imageFile: String,
+    createdAt: Number,
+    validatedAt: Number,
+    active: Boolean,
+    validated: Boolean,
+    confirmEndpoint: String,
 });
 
 export const User: Model<UserInterface> = model<UserInterface>('User', userSchema);

@@ -39,12 +39,9 @@ abstract class Authentication extends Endpoint {
      * a json web token.
      */
     protected login(): void {
-        if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
-            this.userController.readOne(this.request.body.username).then((result) => {
-                // FIXME empty() method awaits string!
-                if (!result) {
-                    this.status(401);
-                } else {
+        if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
+            this.userController.readOne(this.request.body.email).then((result) => {
+                if(this.validUser(result)) {
                     if (this.request.body.passwordHash != result.passwordHash) {
                         this.status(403);
                         return;
@@ -56,8 +53,7 @@ abstract class Authentication extends Endpoint {
                         userGroup: result.userGroup || 0,
                     };
                     this.createJWT(data);
-                }
-                
+                }  
             });
         }
     }
@@ -70,7 +66,11 @@ abstract class Authentication extends Endpoint {
         try {
             const token = jwt.sign(data, this.jwtSecretKey);
             this.status(200);
-            this.response.send(token);
+            this.setHeaderJson();
+            this.response.send({
+                token: token,
+                uuid: this.uuid,
+            });
         } catch(error) {
             logger.error(error);
             this.status(404);
@@ -96,6 +96,32 @@ abstract class Authentication extends Endpoint {
         }
         this.status(401);
         return;
+    }
+
+    /**
+     * Checks if the current user is a valid one, by checkiing
+     * - contains the result object data
+     * - is result.active `true`
+     * - is result.validated `true`
+     * @param result 
+     * @returns 
+     */
+    protected validUser(result: any): void | boolean {
+        if (!result) {
+            this.status(404);
+            return;
+        }
+        // TODO check if user is active
+        if (!result.active) {
+            this.status(400);
+            return;
+        }
+        // TODO check if user is validated
+        if (!result.validated) {
+            this.status(400);
+            return;
+        }
+        return true;
     }
 }
 

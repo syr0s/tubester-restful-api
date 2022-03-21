@@ -2,7 +2,18 @@ site_name: Tubester RESTful API
 nav:
     - Home: index.md
     - Endpoints:
-      - '/': 'endpoints/root.md'
-      - '/auth': 'endpoints/auth.md'
-      - '/user': 'endpoints/user.md'
+      - '/admin':
+        - '/data': 'endpoints/admin/data.md'
+        - '/delete': 'endpoints/admin/delete.md'
+        - '/register': 'endpoints/admin/register.md'
+      - '/user':
+        - '/confirm': 'endpoints/user/confirm.md'
+        - '/data': 'endpoints/user/data.md'
+        - '/delete': 'endpoints/user/delete.md'
+        - '/login': 'endpoints/user/login.md'
+        - '/register': 'endpoints/user/register.md'
+        - '/renew': 'endpoints/user/renew.md'
+    - Data:
+      - 'json web token': 'data/jwt.md'
+      - 'UserInterface': 'data/user_interface.md'
 theme: readthedocs

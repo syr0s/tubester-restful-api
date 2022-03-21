@@ -4,12 +4,16 @@ import cors from 'cors';
 import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
-import { V1 } from './routes/v1';
+import { UserRoutes } from './routes/user_routes';
 import FatalError from './utils/error_handler';
+import Controller from './interfaces/controller';
+import { UserController } from './controller/user';
+import { AdminRoutes } from './routes/admin_routes';
 
 class Server {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
+    private userController: Controller = new UserController();
  
     /**
      * Creates a new server instance.
@@ -35,7 +39,8 @@ class Server {
      * Setup routing on the server.
      */
     private routes(): void {
-        this.app.use('/v1', new V1().router);
+        this.app.use('/admin', new AdminRoutes().router);
+        this.app.use('/user', new UserRoutes().router);
     }
 
     /**
@@ -76,12 +81,32 @@ class Server {
         }
     }
 
+    private setup(): void {
+        this.userController.readAll().then((result) => {
+            if (result.length == 0) {
+                logger.warn('No user found. Creating default admin user.');
+                logger.warn('email: admin / password: admin');
+                logger.warn('Please change the credentials as soon as the setup has finished');
+                this.userController.create({
+                    email: 'admin',
+                    passwordHash: 'admin',
+                    userGroup: 1,
+                    createdAt: Date.now(),
+                    active: true,
+                    validated: true,
+                });
+            }
+        });
+        logger.info('Initial server setup finished');
+    }
+
     /**
      * Starts the server.
      */
     public start(): void {
         this.selfCheck();
         this.mongodb.connect();
+        this.setup();
         this.app.listen(config.SERVER_PORT, () => {
             logger.info(`RESTful API listen on http://localhost:${config.SERVER_PORT}/`);
         });
