@@ -15,24 +15,34 @@ export class RSA extends OS {
             type: 'pkcs8',
             format: 'pem',
             cipher: 'aes-256-cbc',
+            // TODO did we need the passphrase again? Otherwise lets create a random string on the file
             passphrase: config.JWT_SECRET_KEY,
         }
     };
-    private privateKey?: string;
-    private publicKey?: string;
+    public privateKey?: string;
+    public publicKey?: string;
     private privateKeyPath: string = `${__dirname}/private.pem`;
     private publicKeyPath: string = `${__dirname}/public.pem`;
 
     constructor() {
         super();
-        console.log(this.fileExists(this.privateKeyPath))
         if (!this.fileExists(this.privateKeyPath)) {
             logger.info('No private/public key found. Create new RSA key pair.')
             this.generateRSAkey();
+        } else {
+            this.readRSA();
         }
     }
 
-    private generateRSAkey() {
+    /** Read the RSA key pair from disk */
+    private readRSA(): void {
+        this.privateKey = this.readFile(this.privateKeyPath).toString();
+        this.publicKey = this.readFile(this.publicKeyPath).toString();
+
+    }
+
+    /** Generate a new RSA key pair */
+    private generateRSAkey():void {
         const keys: KeyPairSyncResult<string, string> = crypto.generateKeyPairSync('rsa', this.options);
         this.privateKey = keys.privateKey;
         this.publicKey = keys.publicKey;

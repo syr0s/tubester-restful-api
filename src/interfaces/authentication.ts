@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { UserController } from '../controller/user';
-import jwt from 'jsonwebtoken'
+import jwt, { Secret } from 'jsonwebtoken'
 import config from "../config/main";
 import Endpoint from "./endpoint";
 import Controller from "./controller";
 import logger from "../config/logger";
 import Jwt from "./jwt";
+import { RSA } from "../utils/rsa";
 
 /**
  * While using the `Authentication` abstract class, you may want to wrap
@@ -21,6 +22,7 @@ import Jwt from "./jwt";
 abstract class Authentication extends Endpoint {
     private jwtSecretKey: string;
     protected userController: Controller = new UserController();
+    private rsa: RSA = new RSA();
     /** The unique user id */
     protected uuid?: string;
     /** The usergroup the user belongs to */
@@ -64,7 +66,11 @@ abstract class Authentication extends Endpoint {
      */
     protected createJWT(data: Jwt): void {
         try {
-            const token = jwt.sign(data, this.jwtSecretKey);
+            const pk:Secret = {
+                key: String(this.rsa.privateKey), 
+                passphrase: config.JWT_SECRET_KEY
+            };
+            const token = jwt.sign(data, pk, { algorithm: 'RS256' });
             this.status(200);
             this.setHeaderJson();
             this.response.send({
@@ -85,7 +91,7 @@ abstract class Authentication extends Endpoint {
         const authHeader = this.request.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(' ')[1];
-            const verify:any = jwt.verify(token, this.jwtSecretKey);
+            const verify:any = jwt.verify(token, String(this.rsa.publicKey));
             if (verify) {
                 if (verify.time + this.expiry > Date.now()) {
                     this.uuid = verify.uuid;

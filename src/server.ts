@@ -15,7 +15,6 @@ class Server {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
     private userController: Controller = new UserController();
-    private rsa: RSA = new RSA();
  
     /**
      * Creates a new server instance.
