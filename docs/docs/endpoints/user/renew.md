@@ -22,11 +22,14 @@ The endpoint will ignore any request body arguments.
 By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
 
 #### Success response
-The endpoint will respond, with http status code `200 - OK` on a successfull request and will deliver the [`json web token`](../../data/jwt.md) to the client as `Content-Type: text/plain`.
+The endpoint will respond, with http status code `200 - OK` on a successfull request and will deliver the [`json web token`](../../data/jwt.md) to the client as `Content-Type: application/json`.
 
 #### Example response
-```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoxNjQ3NzE4NDEyMDU3LCJ1dWlkIjoiNjIzNjJiNTllNmZiYjhiNjc1Mjg0ZmU4IiwidXNlckdyb3VwIjoxLCJpYXQiOjE2NDc3MTg0MTJ9.q35gNyNh7DjMJ-ksXFkowP7WtzcSxHIk8UL3MIzTTiQ
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoxNjQ3NzE4NDEyMDU3LCJ1dWlkIjoiNjIzNjJiNTllNmZiYjhiNjc1Mjg0ZmU4IiwidXNlckdyb3VwIjoxLCJpYXQiOjE2NDc3MTg0MTJ9.q35gNyNh7DjMJ-ksXFkowP7WtzcSxHIk8UL3MIzTTiQ",
+    "uuid": "62386f133022923b01fdf4f9"
+}
 ```
 
 #### Response description

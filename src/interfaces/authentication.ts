@@ -70,7 +70,11 @@ abstract class Authentication extends Endpoint {
         try {
             const token = jwt.sign(data, this.jwtSecretKey);
             this.status(200);
-            this.response.send(token);
+            this.setHeaderJson();
+            this.response.send({
+                token: token,
+                uuid: this.uuid,
+            });
         } catch(error) {
             logger.error(error);
             this.status(404);
