@@ -39,8 +39,8 @@ abstract class Authentication extends Endpoint {
      * a json web token.
      */
     protected login(): void {
-        if (this.validatePayload(['username', 'passwordHash'], this.request.body)) {
-            this.userController.readOne(this.request.body.username).then((result) => {
+        if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
+            this.userController.readOne(this.request.body.email).then((result) => {
                 // FIXME empty() method awaits string!
                 if (!result) {
                     this.status(401);

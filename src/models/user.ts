@@ -1,7 +1,7 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
 export interface UserInterface extends Document  {
-    username: String;
+    email: String;
     passwordHash: String;
     userGroup: Number;
     timestampCreation: Number;
@@ -10,7 +10,7 @@ export interface UserInterface extends Document  {
 }
 
 export const userSchema = new Schema({
-    username: String,
+    email: String,
     passwordHash: String,
     userGroup: Number,
     timestampCreation: Number,

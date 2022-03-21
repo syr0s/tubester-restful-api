@@ -4,7 +4,7 @@ import cors from 'cors';
 import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
-import { V1 } from './routes/v1';
+import { V1Routes } from './routes/v1';
 import FatalError from './utils/error_handler';
 
 class Server {
@@ -35,7 +35,7 @@ class Server {
      * Setup routing on the server.
      */
     private routes(): void {
-        this.app.use('/v1', new V1().router);
+        this.app.use('/', new V1Routes().router);
     }
 
     /**
