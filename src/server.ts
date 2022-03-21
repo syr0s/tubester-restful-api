@@ -88,7 +88,10 @@ class Server {
                 this.userController.create({
                     email: 'admin',
                     passwordHash: 'admin',
-                    userGroup: 1
+                    userGroup: 1,
+                    createdAt: Date.now(),
+                    active: true,
+                    validated: true,
                 });
             }
         });

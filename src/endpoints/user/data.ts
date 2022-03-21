@@ -3,7 +3,7 @@ import Authentication from "../../interfaces/authentication";
 
 export class EndpointUserData extends Authentication {
     private supportedBodyArgs: string[] = [
-        'email', 'passwordHash'
+        'email', 'passwordHash', 'firstName', 'lastName'
     ];
     /**
      * The endpoint `/user/data` provides two different functionalities. The `GET` method 
@@ -47,8 +47,10 @@ export class EndpointUserData extends Authentication {
                 this.setHeaderJson();
                 this.status(200);
                 this.response.send({
+                    uuid: result._id,
                     email: result.email,
-                    uuid: result._id
+                    firstName: result.firstName,
+                    lastName: result.lastName,
                 });
             });
         }
