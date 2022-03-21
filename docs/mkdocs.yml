@@ -4,6 +4,7 @@ nav:
     - Endpoints:
       - '/admin':
         - '/data': 'endpoints/admin/data.md'
+        - '/register': 'endpoints/admin/register.md'
       - '/user':
         - '/confirm': 'endpoints/user/confirm.md'
         - '/data': 'endpoints/user/data.md'

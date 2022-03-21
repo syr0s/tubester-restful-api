@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import Authentication from "../../interfaces/authentication";
 
 export class EndpointAdminData extends Authentication {
+    private supportedRequestBody: string[] = [
+        'email', 'userGroup', 'firstName', 'lastName', 'active'
+    ];
     constructor(request: Request, response: Response) {
         super(request, response);
     }
@@ -34,6 +37,35 @@ export class EndpointAdminData extends Authentication {
                     return;
                 });
                 return;
+            } else {
+                this.status(403);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Update a certain user account.
+     * @returns 
+     */
+    protected post(): void {
+        if (this.validateJWT()) {
+            if (this.userGroup == 1) {
+                if (this.request.query.uuid) {
+                    const data:any = {};
+                    for (let key in this.request.body) {
+                        if (this.supportedRequestBody.includes(key)) {
+                            data[key] = this.request.body[key];
+                        }
+                    }
+                    this.userController.update(String(this.request.query.uuid), data);
+                    this.status(200);
+                    this.response.send();
+                    return;
+                } else {
+                    this.status(400);
+                    return;
+                }  
             } else {
                 this.status(403);
                 return;

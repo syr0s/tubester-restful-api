@@ -50,6 +50,41 @@ Will return with http status code `200 - OK` and `content-type: application/json
 
 See [UserInterface](../../data/user_interface.md) for further information about the response payload.
 
+## `POST`
+Updates a user account on the backend. Unlike the endpoint [`/user/data`](../user/data.md), the user is able to update every user account, by passing the `uuid` as request parameter.
+
+### Authentication
+The endpoint requires a valid Bearer authentication token / [`json web token`](../../data/jwt.md) to interact with the endpoint.
+
+### Header
+The endpoint will ignore any header.
+
+### Request: parameters
+Requires a valid `uuid` as parameter.
+
+### Request: body
+The endpoint accepts the following body arguments:
+
+- `email`
+- `userGroup`
+- `firstName`
+- `lastName`
+- `active`
+
+### Response
+#### Invalid response
+- By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
+- If user has no admin privileges, the endpoint will respond with http status code `403 - Forbidden`.
+- If the `body.query.uuid` argument is missing, the endpoint will respond with http status code `400 - Bad Request`.
+
+#### Success response
+Will return with http status code `200 - OK`.
+
+#### Example response
+```
+No response message.
+```
+
 ## Changelog
 | Version | Changed by | Description |
 |-------------|-------------|----|
