@@ -4,6 +4,7 @@ nav:
     - Endpoints:
       - '/user':
         - '/data': 'endpoints/user/data.md'
+        - '/delete': 'endpoints/user/delete.md'
         - '/login': 'endpoints/user/login.md'
         - '/renew': 'endpoints/user/renew.md'
 theme: readthedocs
