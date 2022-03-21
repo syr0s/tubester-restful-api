@@ -1,1 +1,0 @@
-# Endpoint `/v1/user`
