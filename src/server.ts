@@ -9,11 +9,13 @@ import FatalError from './utils/error_handler';
 import Controller from './interfaces/controller';
 import { UserController } from './controller/user';
 import { AdminRoutes } from './routes/admin_routes';
+import { RSA } from './utils/rsa';
 
 class Server {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
     private userController: Controller = new UserController();
+    private rsa: RSA = new RSA();
  
     /**
      * Creates a new server instance.
