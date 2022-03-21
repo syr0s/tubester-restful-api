@@ -42,6 +42,7 @@ abstract class Authentication extends Endpoint {
         if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
             this.userController.readOne(this.request.body.email).then((result) => {
                 // FIXME empty() method awaits string!
+                this.validUser(result);
                 if (!result) {
                     this.status(401);
                 } else {
@@ -100,6 +101,31 @@ abstract class Authentication extends Endpoint {
         }
         this.status(401);
         return;
+    }
+
+    /**
+     * Checks if the current user is a valid one, by checkiing
+     * - contains the result object data
+     * - is result.active `true`
+     * - is result.validated `true`
+     * @param result 
+     * @returns 
+     */
+    protected validUser(result: any): void {
+        if (!result) {
+            this.status(404);
+            return;
+        }
+        // TODO check if user is active
+        if (!result.active) {
+            this.status(400);
+            return;
+        }
+        // TODO check if user is validated
+        if (!result.validated) {
+            this.status(400);
+            return;
+        }
     }
 }
 

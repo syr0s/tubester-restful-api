@@ -31,7 +31,7 @@ Timestamp of the users creation.
 Optional. The timestamp when the user was validated by requesting the `/user/confirm` endpoint. This property will be only set if the RESTful API is setup to use two factor authentication. This is done setting the environment variable `TWO_FACTOR_AUTH` to `true` and requires an e-mail setup as well.
 
 ### `active`
-Sets the user account to active or not. ***Currently, no functions implemented***
+Sets the user account to active or not. Mostly, used to avoid access from a user, which is not active. By default, each user created is set to `active: true`.
 
 ### `validated`
 Indicates if the user account was validated by requesing the endpoin `/user/confirm`.

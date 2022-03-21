@@ -21,6 +21,8 @@ The endpoint will ignore any request body arguments.
 The endpoint will respond, based on the clients request.
 - By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
 - If the request parameter is missing, the endpoint will respond with http status code `400 - Bad Request`.
+- If the user is marked as `active: false`, the endpoint will respond with http status code `400 - Bad Request`.
+- If the user is markedd as `validated: false`, the endpoint will respond with http status code `400 - Bad Request`. 
 - If the `uuid` is not found in the database, the endpoint wil respond with http status code `404 - Not Found`.
 
 #### Success response

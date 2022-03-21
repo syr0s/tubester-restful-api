@@ -19,7 +19,9 @@ The endpoint will ignore any request body arguments.
 
 ### Response
 #### Invalid response
-By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
+- By using an invalid token, the endpoint will respond with http status code `401 - Unauthorized`.
+- If the user is marked as `active: false`, the endpoint will respond with http status code `400 - Bad Request`.
+- If the user is markedd as `validated: false`, the endpoint will respond with http status code `400 - Bad Request`.
 
 #### Success response
 The endpoint will respond, with http status code `200 - OK` on a successfull request and will deliver the [`json web token`](../../data/jwt.md) to the client as `Content-Type: application/json`.

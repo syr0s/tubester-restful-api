@@ -40,10 +40,7 @@ export class EndpointUserData extends Authentication {
                 __v: 0
             }
             this.userController.readById(String(this.request.query.uuid), projection).then((result) => {
-                if (!result) {
-                    this.status(404);
-                    return;
-                }
+                this.validUser(result);
                 this.setHeaderJson();
                 this.status(200);
                 this.response.send({
