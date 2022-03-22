@@ -5,33 +5,20 @@ import config from './config/main';
 import logger from './config/logger';
 import MongoDB from './database/mongodb';
 import { UserRoutes } from './routes/user_routes';
-import FatalError from './utils/error_handler';
-import Controller from './interfaces/controller';
-import { UserController } from './controller/user';
 import { AdminRoutes } from './routes/admin_routes';
-import { OS } from './utils/os';
-import { rootDir } from './constants';
+import { Setup } from './utils/setup';
 
 
 
-class Server {
+class Server extends Setup {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
-    private userController: Controller = new UserController();
-    private os: OS = new OS();
-    /** 
-     * Array of required subdirectories within the project root.
-     * Make sure to add all of this directories to your `.gitignore` and
-     * `.dockerignore` files.
-     */
-    private directories: string[] = [
-        '/.keys',
-    ];
  
     /**
      * Creates a new server instance.
      */
     constructor() {
+        super();
         this.app = express();
         this.config();
         this.routes();
@@ -57,72 +44,10 @@ class Server {
     }
 
     /**
-     * Self check before starting the server.
-     */
-    private selfCheck(): void {
-        this.selfCheckJWT();
-        this.selfCheckJWT();
-        this.selfCheckEmail();
-    }
-
-    /** Check if a JWT_SECRET_KEY is set */
-    private selfCheckJWT(): void {
-        if (!config.JWT_SECRET_KEY || config.JWT_SECRET_KEY.length == 0) {
-            throw new FatalError('JWT_SECRET_KEY is empty please set up a value using environment variable');
-        }
-    }
-    
-    /** Check if the email feature is enabled if server requires two factor auth */
-    private selfCheckTwoFactor(): void {
-        if (config.TWO_FACTOR_AUTH && !config.E_MAIL_FEATURE_ENABLED) {
-            throw new FatalError('TWO_FACTOR_AUTH requires E_MAIL_FEATURE_ENABLED to true');
-        }
-    }
-
-    /** Check for proper email setup */
-    private selfCheckEmail(): void {
-        if (config.E_MAIL_USE_OAUTH2) {
-            if (
-                !config.E_MAIL_USER ||
-                !config.E_MAIL_PASSWORD ||
-                !config.E_MAIL_CLIENT_ID ||
-                !config.E_MAIL_CLIENT_SECRET ||
-                !config.E_MAIL_REFRESH_TOKEN
-            ) {
-                throw new FatalError('E-Mail setup not completed! Please re-check your environment variables for a proper setup');
-            }
-        }
-    }
-
-    private setup(): void {
-        this.userController.readAll().then((result) => {
-            if (result.length == 0) {
-                logger.warn('No user found. Creating default admin user.');
-                logger.warn('email: admin / password: admin');
-                logger.warn('Please change the credentials as soon as the setup has finished');
-                this.userController.create({
-                    email: 'admin',
-                    passwordHash: 'admin',
-                    userGroup: 1,
-                    createdAt: Date.now(),
-                    active: true,
-                    validated: true,
-                });
-            }
-        });
-        for (let i = 0; i < this.directories.length; i++) {
-            this.os.creteDir(rootDir + this.directories[i]);
-        }
-        logger.info('Initial server setup finished');
-    }
-
-    /**
      * Starts the server.
      */
     public start(): void {
-        this.selfCheck();
         this.mongodb.connect();
-        this.setup();
         this.app.listen(config.SERVER_PORT, () => {
             logger.info(`RESTful API listen on http://localhost:${config.SERVER_PORT}/`);
         });

@@ -16,6 +16,7 @@ export class RSA extends OS {
             type: 'pkcs8',
             format: 'pem',
             cipher: 'aes-256-cbc',
+            // TODO create secret key automatically and store it savly, so we can remove the JWT_SECRET_KEY variable
             passphrase: config.JWT_SECRET_KEY,
         }
     };
@@ -32,6 +33,15 @@ export class RSA extends OS {
         } else {
             this.readRSA();
         }
+    }
+
+    /**
+     * Create a random string with a given size.
+     * @param size of the random string
+     * @returns 
+     */
+    public static createRandomString(size: number): string {
+        return crypto.randomBytes(size).toString('base64').slice(0, size);
     }
 
     /** Read the RSA key pair from disk */
