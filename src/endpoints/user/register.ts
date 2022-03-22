@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import crypto from 'crypto';
 import config from "../../config/main";
 import Authentication from "../../interfaces/authentication";
+import { UserInterface } from "../../models/user";
 
 export class EndpointUserRegister extends Authentication {
     /**
@@ -27,7 +28,7 @@ export class EndpointUserRegister extends Authentication {
             if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
                 this.userController.readOne(this.request.body.username).then((result) => {
                     if(!result) {
-                        const data:any = {
+                        const data:UserInterface = {
                             email: this.request.body.email,
                             passwordHash: this.request.body.passwordHash,
                             // always set userGroup to 0 which is a normal user
@@ -36,7 +37,7 @@ export class EndpointUserRegister extends Authentication {
                             lastName: this.request.body.lastName || '',
                             createdAt: Date.now(),
                             active: true,
-                        }
+                        } as UserInterface;
                         if(config.TWO_FACTOR_AUTH) {
                             // TODO create and send email
                             const confirmEndpoint: string = 

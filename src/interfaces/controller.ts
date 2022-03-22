@@ -12,24 +12,28 @@ abstract class Controller {
      * key value pair: fieldname: 1 or deactivate them using fieldname: 0
      * @returns array containing result objects
      */
-    public abstract readOne(needle: string, projection?: object): Promise<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public abstract readOne(needle: string, projection?: object): Promise<any | void>;
 
     /**
      * Read a defined record from the MongoDB
      */
-    public abstract readConfirm(id: string): Promise<any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public abstract readConfirm(id: string): Promise<any | void>
 
     /**
      * Read all records from the MongoDB
      * @returns array containing result objects
      */
-    public abstract readAll(projection?: object): Promise<object[]>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public abstract readAll(projection?: object): Promise<any>;
 
     /**
      * Query for a specific record id.
      * @param id of the record
      */
-    public abstract readById(id: string, projection?: object): Promise<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public abstract readById(id: string, projection?: object): Promise<any | void>;
 
     /**
      * Update a record in MongoDB

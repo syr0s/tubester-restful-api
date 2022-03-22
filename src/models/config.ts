@@ -1,7 +1,7 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
 export interface ConfigInterface extends Document  {
-    JWT_SECRET_KEY: String;
+    JWT_SECRET_KEY: string;
 }
 
 export const configSchema = new Schema({

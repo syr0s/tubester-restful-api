@@ -8,6 +8,7 @@ export class UserController extends Controller {
      * @param projection filter to needed fields, you can activate certain fields using
      * @returns array containing the data or an empty if no data is available
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async readOne(username: string, projection?: object): Promise<any> {
         const user = await User.findOne({
             email: username
@@ -20,6 +21,7 @@ export class UserController extends Controller {
      * @param id of the confirmation endpoint
      * @returns 
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async readConfirm(id: string): Promise<any> {
         const user = await User.findOne({
             confirmEndpoint: id
@@ -42,6 +44,7 @@ export class UserController extends Controller {
      * @param projection filter to needed fields, you can activate certain fields using
      * @returns array containing the data or an empty if no data is available
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async readById(id: string, projection?: object): Promise<any> {
         const user = await User.findById(id, projection).exec();
         return user;

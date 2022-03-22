@@ -7,6 +7,7 @@ import Controller from "./controller";
 import logger from "../config/logger";
 import Jwt from "./jwt";
 import { RSA } from "../utils/rsa";
+import { UserInterface } from "../models/user";
 
 /**
  * While using the `Authentication` abstract class, you may want to wrap
@@ -91,7 +92,7 @@ abstract class Authentication extends Endpoint {
         const authHeader = this.request.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(' ')[1];
-            const verify:any = jwt.verify(token, String(this.rsa.publicKey));
+            const verify: Jwt = jwt.verify(token, String(this.rsa.publicKey)) as Jwt;
             if (verify) {
                 if (verify.time + this.expiry > Date.now()) {
                     this.uuid = verify.uuid;
@@ -112,7 +113,7 @@ abstract class Authentication extends Endpoint {
      * @param result 
      * @returns 
      */
-    protected validUser(result: any): void | boolean {
+    protected validUser(result: UserInterface): void | boolean {
         if (!result) {
             this.status(404);
             return;

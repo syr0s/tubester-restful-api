@@ -6,7 +6,7 @@ import { rootDir } from "../constants";
 
 export class RSA extends OS {
     /** RSA options for key generation */
-    private options:any = {
+    private options:crypto.RSAKeyPairOptions<'pem', 'pem'> = {
         modulusLength: 1024 * 2,
         publicKeyEncoding: {
             type: 'spki',
@@ -22,8 +22,8 @@ export class RSA extends OS {
     };
     public privateKey?: string;
     public publicKey?: string;
-    private privateKeyPath: string = `${rootDir}/.keys/private.pem`;
-    private publicKeyPath: string = `${rootDir}/.keys/public.pem`;
+    private privateKeyPath = `${rootDir}/.keys/private.pem`;
+    private publicKeyPath = `${rootDir}/.keys/public.pem`;
 
     constructor() {
         super();

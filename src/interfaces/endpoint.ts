@@ -103,7 +103,8 @@ abstract class Endpoint {
      * @protected
      */
     protected status(status: number): void {
-        const msg: string = `Endpoint ${this.request.path} returns status ${status} for method ${this.request.method}`;
+        const msg = `Endpoint ${this.request.path} returns status ${status} for method ${this.request.method}`;
+        const err = `HTTP status code ${status} not implemented`;
         this.response.statusCode = status;
         switch(true) {
             case between(status, 200, 299):
@@ -118,7 +119,6 @@ abstract class Endpoint {
                 this.response.sendStatus(status);
                 break;
             default:
-                const err: string = `HTTP status code ${status} not implemented`;
                 logger.error(err);
                 throw Error(err);
         }
@@ -139,8 +139,8 @@ abstract class Endpoint {
      * @param val search for
      * @returns boolean
      */
-    protected hasKey<T>(obj: T, val: any): val is T[keyof T]  {
-        for (let k in obj) {
+    protected hasKey<T>(obj: T, val: unknown): val is T[keyof T]  {
+        for (const k in obj) {
             if (k == val) {
                 return true;
             }
@@ -149,12 +149,12 @@ abstract class Endpoint {
     }
 
     /**
-     * Check if a given `string` is empty or not.
-     * @param string `string` to check
+     * Check if a given `obj` is empty or not.
+     * @param obj `string` or `Array` to check
      * @returns 
      */
-    protected empty(string: string | any): boolean {
-        if (string.length === 0) {
+    protected empty(obj: string | Array<string | object>): boolean {
+        if (obj.length === 0) {
             return true;
         }
         return false;
@@ -166,14 +166,9 @@ abstract class Endpoint {
      * @param keys required keys in the payload
      * @param payload to inspect
      */
-     protected validatePayload(keys: string[], payload: any): boolean | void {
-        for (let i: number = 0; i < keys.length; i++) {
+     protected validatePayload(keys: string[], payload: object): boolean | void {
+        for (let i = 0; i < keys.length; i++) {
             if (!this.hasKey(payload, keys[i])) {
-                this.status(400);
-                return;
-            }
-            // Check if the key contains any value
-            if (this.empty(payload[keys[i]])){
                 this.status(400);
                 return;
             }

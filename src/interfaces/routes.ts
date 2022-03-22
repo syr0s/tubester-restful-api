@@ -1,5 +1,4 @@
-import { Request, Response, Router } from "express";
-import Controller from "./controller";
+import { Router } from "express";
 
 abstract class Routes {
     /** Express.js `Router` object */

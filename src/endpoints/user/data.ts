@@ -65,7 +65,7 @@ export class EndpointUserData extends Authentication {
     protected post(): void {
         if (this.validateJWT()) {
             const data:any = {};
-            for (let key in this.request.body) {
+            for (const key in this.request.body) {
                 if (this.supportedBodyArgs.includes(key)) {
                     data[key] = this.request.body[key];
                 }

@@ -22,27 +22,27 @@ export class ConfigController extends Controller {
     }
 
     /** Method not implemented */
-    public del(key: string): Promise<void> {
+    public del(): Promise<void> {
         throw new FatalError('Method del() not implemented for ConfigController');
     }
 
     /** Method not implemented */
-    public readOne(needle: string, projection?: object): Promise<any> {
+    public readOne(): Promise<void> {
         throw new FatalError('Method readOne() not implemented for ConfigController');
     }
 
     /** Method not implemented */
-    public readById(id: string, projection?: object): Promise<any> {
+    public readById(): Promise<void> {
         throw new FatalError('Method readById() not implemented for ConfigController');
     }
 
     /** Method not implemented */
-    public readConfirm(id: string): Promise<any> {
+    public readConfirm(): Promise<void> {
         throw new FatalError('Method readConfirm() not implemented for ConfigController');
     }
 
     /** Method not implemented */
-    public update(key: string, data: object): Promise<void> {
+    public update(): Promise<void> {
         throw new FatalError('Method update() not implemented for ConfigController');
     }
 }

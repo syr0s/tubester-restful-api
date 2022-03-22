@@ -36,7 +36,7 @@ export class EndpointAdminRegister extends Authentication {
                     active: true,
                     validated: true,
                 };
-                for (let key in this.request.body) {
+                for (const key in this.request.body) {
                     if (this.optionalBody.includes(key)) {
                         data[key] = this.request.body[key];
                     }

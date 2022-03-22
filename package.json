@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev:server": "nodemon src/main.ts"
+    "dev:server": "nodemon src/main.ts",
+    "dev:lint": "npx eslint ."
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
     "@types/cors": "^2.8.12",
     "@types/ini": "^1.3.31",
     "@types/jsonwebtoken": "^8.5.8",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"

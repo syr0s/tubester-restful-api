@@ -1,11 +1,11 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import ini from 'ini';
 import Configuration from "../interfaces/config";
 import { toBoolean } from '../utils/boolean';
 
 // Load and process `.env` file.
-require('dotenv').config();
+dotenv.config();
 
 // Read `config.ini` file.
 const configFile = ini.parse(fs.readFileSync(`${__dirname}/config.ini`, 'utf-8'));

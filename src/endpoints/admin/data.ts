@@ -53,7 +53,7 @@ export class EndpointAdminData extends Authentication {
             if (this.userGroup == 1) {
                 if (this.request.query.uuid) {
                     const data:any = {};
-                    for (let key in this.request.body) {
+                    for (const key in this.request.body) {
                         if (this.supportedRequestBody.includes(key)) {
                             data[key] = this.request.body[key];
                         }
