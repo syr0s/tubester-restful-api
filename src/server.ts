@@ -10,9 +10,9 @@ import Controller from './interfaces/controller';
 import { UserController } from './controller/user';
 import { AdminRoutes } from './routes/admin_routes';
 import { OS } from './utils/os';
+import { rootDir } from './constants';
 
-/** The root directory of the project */
-export const rootDir: string = __dirname;
+
 
 class Server {
     public app: express.Application;

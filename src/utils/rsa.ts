@@ -2,6 +2,7 @@ import config from "../config/main";
 import { OS } from "./os";
 import crypto, { KeyPairSyncResult } from 'crypto';
 import logger from "../config/logger";
+import { rootDir } from "../constants";
 
 export class RSA extends OS {
     /** RSA options for key generation */
@@ -20,8 +21,8 @@ export class RSA extends OS {
     };
     public privateKey?: string;
     public publicKey?: string;
-    private privateKeyPath: string = `${this.rootDir}/.keys/private.pem`;
-    private publicKeyPath: string = `${this.rootDir}/.keys/public.pem`;
+    private privateKeyPath: string = `${rootDir}/.keys/private.pem`;
+    private publicKeyPath: string = `${rootDir}/.keys/public.pem`;
 
     constructor() {
         super();
