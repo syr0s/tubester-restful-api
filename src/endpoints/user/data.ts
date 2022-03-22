@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "../../config/logger";
 import Authentication from "../../interfaces/authentication";
 
 export class EndpointUserData extends Authentication {
@@ -78,7 +79,9 @@ export class EndpointUserData extends Authentication {
                         this.status(400);
                         return;
                     } else {
-                        this.userController.update(String(this.uuid), data);
+                        this.userController.update(String(this.uuid), data).catch((error) => {
+                            logger.error(error);
+                        });
                         this.setHeaderJson();
                         this.status(200);
                         this.response.send();

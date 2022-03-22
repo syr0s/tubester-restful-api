@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "../../config/logger";
 import Authentication from "../../interfaces/authentication";
 
 export class EndpointUserDelete extends Authentication {
@@ -18,7 +19,9 @@ export class EndpointUserDelete extends Authentication {
      */
      protected del(): void {
         if (this.validateJWT()) {
-            this.userController.del(String(this.uuid));
+            this.userController.del(String(this.uuid)).catch((error) => {
+                logger.error(error);
+            });
             this.status(200);
             this.response.send();
         }

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "../../config/logger";
 import Authentication from "../../interfaces/authentication";
 
 export class EndpointAdminRegister extends Authentication {
@@ -44,7 +45,9 @@ export class EndpointAdminRegister extends Authentication {
                 }
                 this.userController.readOne(data.email).then((result) => {
                     if (!result) {
-                        this.userController.create(data);
+                        this.userController.create(data).catch((error) => {
+                            logger.error(error);
+                        });
                         this.status(201);
                         this.response.send();
                     } else {

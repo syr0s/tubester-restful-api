@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "../../config/logger";
 import Authentication from "../../interfaces/authentication";
 
 export class EndpointAdminDelete extends Authentication {
@@ -24,7 +25,9 @@ export class EndpointAdminDelete extends Authentication {
                             this.status(400);
                             return;
                         } else {
-                            this.userController.del(String(this.request.query.uuid));
+                            this.userController.del(String(this.request.query.uuid)).catch((error) => {
+                                logger.error(error);
+                            });
                             this.status(200);
                             this.response.send();
                         }

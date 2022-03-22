@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import config from "../../config/main";
 import Authentication from "../../interfaces/authentication";
 import { UserInterface } from "../../models/user";
+import logger from "../../config/logger";
 
 export class EndpointUserRegister extends Authentication {
     /**
@@ -47,7 +48,9 @@ export class EndpointUserRegister extends Authentication {
                         } else {
                             data.validated = true;
                         }
-                        this.userController.create(data);
+                        this.userController.create(data).catch((error) => {
+                            logger.error(error);
+                        });
                         this.status(201);
                         this.response.send();
                         return;

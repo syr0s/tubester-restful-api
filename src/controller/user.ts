@@ -29,10 +29,11 @@ export class UserController extends Controller {
         return user;
     }
 
-    /** 
-     * Not implemented
-     * @throws
-     * */
+    /**
+     * Reads all documents from the collection
+     * @param projection 
+     * @returns 
+     */
     public async readAll(projection?: object): Promise<object[]> {
         const userData = await User.find({}, projection).lean().exec();
         return userData;
@@ -46,11 +47,14 @@ export class UserController extends Controller {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async readById(id: string, projection?: object): Promise<any> {
-        const user = await User.findById(id, projection).exec();
-        return user;
+        const result = await User.findById(id, projection).exec();
+        return result;
     }
 
-    // TODO the parameter could be an object
+    /**
+     * Create a new user account on the MongoDB
+     * @param data 
+     */
     public async create(data: object): Promise<void> {
         const newUser: UserInterface = new User(data);
         await newUser.save();
