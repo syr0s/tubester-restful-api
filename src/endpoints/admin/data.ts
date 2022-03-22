@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Authentication from "../../interfaces/authentication";
+import { UserInterface } from "../../models/user";
 
 export class EndpointAdminData extends Authentication {
     private supportedRequestBody: string[] = [
@@ -55,6 +56,7 @@ export class EndpointAdminData extends Authentication {
                     const data:any = {};
                     for (const key in this.request.body) {
                         if (this.supportedRequestBody.includes(key)) {
+                            
                             data[key] = this.request.body[key];
                         }
                     }
