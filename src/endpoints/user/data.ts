@@ -64,6 +64,7 @@ export class EndpointUserData extends Authentication {
      */
     protected post(): void {
         if (this.validateJWT()) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const data:any = {};
             for (const key in this.request.body) {
                 if (this.supportedBodyArgs.includes(key)) {

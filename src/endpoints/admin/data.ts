@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Authentication from "../../interfaces/authentication";
-import { UserInterface } from "../../models/user";
 
 export class EndpointAdminData extends Authentication {
     private supportedRequestBody: string[] = [
@@ -53,10 +52,10 @@ export class EndpointAdminData extends Authentication {
         if (this.validateJWT()) {
             if (this.userGroup == 1) {
                 if (this.request.query.uuid) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const data:any = {};
                     for (const key in this.request.body) {
                         if (this.supportedRequestBody.includes(key)) {
-                            
                             data[key] = this.request.body[key];
                         }
                     }

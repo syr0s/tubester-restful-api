@@ -27,6 +27,7 @@ export class EndpointAdminRegister extends Authentication {
     protected put(): void {
         if (this.validateJWT()) {
             if (this.validatePayload(['email', 'passwordHash'], this.request.body)) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const data:any = {
                     email: this.request.body.email,
                     passwordHash: this.request.body.passwordHash,
