@@ -1,8 +1,18 @@
 import fs from 'fs';
 import logger from '../config/logger';
+import { rootDir } from '../server';
 import FatalError from './error_handler';
 
 export class OS {
+    /** The root directory of the project */
+    protected rootDir: string = rootDir;
+
+    public creteDir(path: string): void {
+        if (!this.fileExists(path)) {
+            fs.mkdirSync(path);
+            logger.info(`Created directory: ${path}`);
+        } 
+    }
 
     /**
      * Reads a file into buffer.

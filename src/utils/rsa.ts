@@ -15,14 +15,13 @@ export class RSA extends OS {
             type: 'pkcs8',
             format: 'pem',
             cipher: 'aes-256-cbc',
-            // TODO did we need the passphrase again? Otherwise lets create a random string on the file
             passphrase: config.JWT_SECRET_KEY,
         }
     };
     public privateKey?: string;
     public publicKey?: string;
-    private privateKeyPath: string = `${__dirname}/private.pem`;
-    private publicKeyPath: string = `${__dirname}/public.pem`;
+    private privateKeyPath: string = `${this.rootDir}/.keys/private.pem`;
+    private publicKeyPath: string = `${this.rootDir}/.keys/public.pem`;
 
     constructor() {
         super();

@@ -9,12 +9,24 @@ import FatalError from './utils/error_handler';
 import Controller from './interfaces/controller';
 import { UserController } from './controller/user';
 import { AdminRoutes } from './routes/admin_routes';
-import { RSA } from './utils/rsa';
+import { OS } from './utils/os';
+
+/** The root directory of the project */
+export const rootDir: string = __dirname;
 
 class Server {
     public app: express.Application;
     private mongodb: MongoDB = new MongoDB();
     private userController: Controller = new UserController();
+    private os: OS = new OS();
+    /** 
+     * Array of required subdirectories within the project root.
+     * Make sure to add all of this directories to your `.gitignore` and
+     * `.dockerignore` files.
+     */
+    private directories: string[] = [
+        '/.keys',
+    ];
  
     /**
      * Creates a new server instance.
@@ -98,6 +110,9 @@ class Server {
                 });
             }
         });
+        for (let i = 0; i < this.directories.length; i++) {
+            this.os.creteDir(rootDir + this.directories[i]);
+        }
         logger.info('Initial server setup finished');
     }
 
